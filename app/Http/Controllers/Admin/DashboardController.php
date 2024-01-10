@@ -5,24 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller
+class DashboardController extends Controller
 {
+
     public function __construct()
     {
-        // Sử dụng Session để check login 
-        echo 'Products Admin Started';
+        echo 'Dashboard Start!';
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        return 'Danh sach san pham';
+        return '<h2>Dashboard Admin</h2>';
     }
 
     /**
-     * Show the form for creating a new product. (GET)
+     * Show the form for creating a new resource.
      */
     public function create()
     {
@@ -30,7 +29,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Store a newly created product in storage. (POST)
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
@@ -38,7 +37,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Display the specified product. (GET)
+     * Display the specified resource.
      */
     public function show(string $id)
     {
@@ -46,7 +45,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified product. (GET)
+     * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
@@ -54,7 +53,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Update the specified product in storage. (PUT,PATCH)
+     * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
@@ -62,7 +61,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Remove the specified product from storage. (DELETE)
+     * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {

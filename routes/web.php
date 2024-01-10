@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ use App\Http\Controllers\CategoriesController;
 // Route::get('/products/{productName}', [ProductsController::class, 'detail']);//detail function of ProductsController
 Route::get("/", function () {
     return 'Home Page';
-});
+})->name('home');
 
 Route::prefix('categories')->group(function () {
 
@@ -51,6 +52,7 @@ Route::prefix('categories')->group(function () {
     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
 });
 
-Route::prefix('admin')->group(function () {
-    Route::resource('products', ProductsController::class);
+Route::middleware('auth.admin')->prefix('admin')->group(function () {
+    Route::resource('/', DashboardController::class);
+    Route::middleware('auth.admin.product')->resource('products', ProductsController::class);
 });
