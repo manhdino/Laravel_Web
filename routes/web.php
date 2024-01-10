@@ -40,10 +40,10 @@ use App\Http\Controllers\HomeController;
 // })->name('home');
 
 //*Pass data to view by constroller
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware('auth.admin')->get('/', [HomeController::class, 'index'])->name('home');
 
 
-Route::prefix('categories')->group(function () {
+Route::middleware('auth.admin')->prefix('categories')->group(function () {
 
     // Danh sách chuyên mục
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');

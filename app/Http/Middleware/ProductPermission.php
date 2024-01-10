@@ -15,7 +15,7 @@ class ProductPermission
      */
     public function handle(Request $request, Closure $next): Response
     {
-        echo 'Request product Admin';
+        echo '<h3>Request product Admin</h3>';
         return $next($request);
     }
 }
