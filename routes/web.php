@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\CategoriesController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,9 @@ use App\Http\Controllers\CategoriesController;
 // Route::get('products', [ProductsController::class, 'index']); //index function of ProductsController
 
 // Route::get('/products/{productName}', [ProductsController::class, 'detail']);//detail function of ProductsController
+Route::get("/", function () {
+    return 'Home Page';
+});
 
 Route::prefix('categories')->group(function () {
 
@@ -45,4 +49,8 @@ Route::prefix('categories')->group(function () {
 
     //Xóa chuyên mục
     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::resource('products', ProductsController::class);
 });
