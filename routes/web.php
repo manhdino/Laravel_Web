@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\DashboardController;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,9 +27,21 @@ use App\Http\Controllers\Admin\DashboardController;
 // Route::get('products', [ProductsController::class, 'index']); //index function of ProductsController
 
 // Route::get('/products/{productName}', [ProductsController::class, 'detail']);//detail function of ProductsController
-Route::get("/", function () {
-    return 'Home Page';
-})->name('home');
+
+//* Pass data to view by route
+// Route::get("/", function () {
+//     $title = "Learn Laravel PHP Framework";
+//     $content = 'Learn Laravel 8x Framework';
+//     $dataView = [
+//         'title' => $title,
+//         'content' => $content,
+//     ];
+//     return view('home', $dataView); //import and load view home.php file
+// })->name('home');
+
+//*Pass data to view by constroller
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
 Route::prefix('categories')->group(function () {
 
@@ -51,6 +63,9 @@ Route::prefix('categories')->group(function () {
     //Xóa chuyên mục
     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
 });
+
+
+Route::get('san-pham/{id}', [HomeController::class, 'getDetail']);
 
 Route::middleware('auth.admin')->prefix('admin')->group(function () {
     Route::resource('/', DashboardController::class);
