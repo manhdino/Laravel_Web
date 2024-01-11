@@ -2,7 +2,8 @@
 
 <form method="POST" action="<?php echo route('categories.add') ?>">
     <div>
-        <input type="text" name="category_name" placeholder="Tên chuyên mục" />
+        <input type="text" name="category_name" placeholder="Tên chuyên mục" value="<?php //echo $cateName 
+                                                                                    old('category_name') ?>" />
     </div>
     <?php echo csrf_field() ?>
     <button type="submit">Thêm chuyên mục</button>

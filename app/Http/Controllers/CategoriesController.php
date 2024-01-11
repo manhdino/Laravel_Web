@@ -69,6 +69,11 @@ class CategoriesController extends Controller
         echo '<br/>';
         $name = request('name', 'Unicode'); //Unicode là giá trị mặc định nếu ?name=.. không tồn tại
         echo 'Name: ' . $name;
+        echo '<br/>';
+        $query = $request->query();
+        echo '<pre>';
+        print_r($query);
+        echo '</pre>';
         return view('clients.categories.list');
     }
 
@@ -89,7 +94,11 @@ class CategoriesController extends Controller
     public function addCategory(Request $request)
     {
         $path = $request->path();
-        echo $path;
+        // echo $path;
+
+        // $cateName = $request->old('category_name');
+
+        // return view('clients.categories.add', compact('cateName'));
         return view('clients.categories.add');
     }
 
@@ -103,12 +112,43 @@ class CategoriesController extends Controller
         // echo '</pre>';
 
         //Làm việc vs Laravel
-        $dataRequest = $request->all();
+        // $dataRequest = $request->all();
         // dd($dataRequest);
 
-        if ($request->isMethod('POST')) {
-            echo 'Check POST Method: true';
+        // if ($request->isMethod('POST')) {
+        //     echo 'Check POST Method: true';
+        // }
+        //method query(): $request->query(); --> chỉ lấy được Query String thôi chứ ko lấy được dữ liệu trong Input 
+        // khi sử dụng method POST
+        //C1:
+        //$cateName = $request->category_name;
+        $cateName = $request->input('category_name');
+        //C2:
+        // $queryString = $request->query();
+        // echo '<pre>';
+        // print_r($queryString);
+        // echo '</pre>';
+        // dd($cateName);
+
+        // if ($request->has('category_name')) {
+        //     $cateName = $request->category_name;
+        //     dd($cateName);
+        // } else {
+        //     return 'Không tồn tại input với field name là category_name'; //giống như check isset
+        // }
+
+        //flash(): lưu dữ liệu của input vào trong 1 session tạm thời
+        // session này chỉ tồn tại trong thời gian ngắn, reload lại sẽ tự xóa
+
+        if ($request->has('category_name')) {
+            $cateName = $request->category_name;
+            // dd($cateName);
+            $request->flash();
+            return redirect(route('categories.add'));
+        } else {
+            return 'Không tồn tại input với field name là category_name'; //giống như check isset
         }
+
         // return redirect(route("categories.add"));
     }
 
@@ -116,5 +156,45 @@ class CategoriesController extends Controller
     public function deleteCategory($id)
     {
         return 'Submit xóa chuyên mục' . $id;
+    }
+
+    //Form upload file
+    public function getFile()
+    {
+        return view('clients.categories.file');
+    }
+    //Xử lý với file
+    public function handleFile(Request $request)
+    {
+        //C1:
+        // $file = $request->file('photo');
+        //C2:
+
+        if ($request->hasFile('photo')) {
+            if ($request->photo->isValid()) { //Check file đã upload lên Server thành công hay chưa
+                $file = $request->photo;
+                $path = $file->path();
+                $ext = $file->extension(); //đuôi của file(.jpg or .txt,...)
+                // dd($path);
+                // dd($file);
+                // dd($ext);
+                //store file vào local
+                $store = $file->store('images');
+                $storeAs = $file->storeAs('images', 'avatar.jpg');
+
+                //Lấy tên file gốc
+                $fileNameOrigin = $file->getClientOriginalName();
+                echo 'File name: ' . $fileNameOrigin;
+                echo '<br/>';
+
+                //Đổi tên file 
+                $fileName = md5(uniqid()) . '.' . $ext;
+                echo 'File name sau khi đổi: ' . $fileName;
+            } else {
+                return 'Upload ko thành công';
+            }
+        } else {
+            return "Vui lòng chọn file ";
+        }
     }
 }

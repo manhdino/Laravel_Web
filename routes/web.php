@@ -62,6 +62,10 @@ Route::middleware('auth.admin')->prefix('categories')->group(function () {
 
     //Xóa chuyên mục
     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
+
+    Route::get('/upload', [CategoriesController::class, 'getFile'])->name('categories.getFile');
+    //Xử lý file:
+    Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.uploadFile');
 });
 
 
