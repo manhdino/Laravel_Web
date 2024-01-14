@@ -32,4 +32,14 @@ class HomeController extends Controller
         $name = 'Inphone 15 PRO MAX';
         return view('clients.products.detail', compact('id', 'name'));
     }
+
+    public function getArray()
+    {
+        $contentArr = [
+            'name' => 'Laravel 8.x',
+            'lesson ' => 'Khóa học lập trình Laravel ',
+            'academy' => 'Unicode'
+        ];
+        return $contentArr;
+    }
 }
