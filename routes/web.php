@@ -114,13 +114,34 @@ Route::get('demo-response', function () {
     //C1: Thông thường
     // return view('clients.demo');
     //C2: Sd qua helper response()
-    $title = 'Laravel';
-    $content = 'Learn Laravel Application PHP 10.x';
-    $response = response()->view('clients.demo', compact('title', 'content'), 200)->header('Content-Type', 'text/html');
-    return $response;
-});
+    // $title = 'Laravel';
+    // $content = 'Learn Laravel Application PHP 10.x';
+    // $response = response()->view('clients.demo', compact('title', 'content'), 200)->header('Content-Type', 'text/html');
+    // return $response;
+
+    //Method json()
+    // $profile = [
+    //     'name' => 'Dinomanh',
+    //     'email' => 'manhnguyen@gmail.com',
+    //     'password' => '12345'
+    // ];
+    // return response()->json($profile)->header('Content-Type', 'application/json');
+
+    //redirect():thường dùng để chuyển hướng từ phương thức POST về phương thức GET
+    echo old('username');
+    return view('clients.demo');
+})->name('demo-response');
 
 Route::get('demo-response-2', function (Request $request) {
     // dd($request);
     return $request->cookie('unicode');
+});
+
+Route::post('demo-response', function (Request $request) {
+    if (!empty($request->username)) {
+        // return redirect()->route('demo-response');
+        return back()->withInput()->with('mess', 'Success');
+    }
+    //redirect()->with(): flash session: thường dùng để thông báo message vì nó có thời gian sống rất ngắn(chỉ hiển thị 1 lần)
+    return redirect()->route('demo-response')->with('mess', 'No data');
 });

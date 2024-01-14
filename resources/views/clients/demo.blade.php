@@ -11,8 +11,16 @@
 <body>
 
     <h1>Demo Response</h1>
-    <h2>{{ $title }}</h2>
-    <h3>{{ $content }}</h3>
+    {{-- <h2>{{ $title }}</h2>
+    <h3>{{ $content }}</h3> --}}
+    @if (session('mess'))
+        <div>{{ session('mess') }}</div>
+    @endif
+    <form action="" method="POST">
+        <input type="text" name="username" placeholder="Username..." value="{{ old('username') }}" />
+        <button type="submit">Submit</button>
+        @csrf
+    </form>
 </body>
 
 </html>
