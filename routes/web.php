@@ -82,7 +82,7 @@ Route::get('get-info', [HomeController::class, 'getArray']);
 
 Route::get('demo-response', function () {
 
-    //Response trả về trình duyệt từ Server
+    //Response trả về trình duyệt từ Server     
     //C1: sd class Response
     // $response = new Response('Hoc lap trinh tai Unicode', 201);
     // dd($response);
@@ -128,7 +128,7 @@ Route::get('demo-response', function () {
     // return response()->json($profile)->header('Content-Type', 'application/json');
 
     //redirect():thường dùng để chuyển hướng từ phương thức POST về phương thức GET
-    echo old('username');
+    // echo old('username');
     return view('clients.demo');
 })->name('demo-response');
 
@@ -145,3 +145,5 @@ Route::post('demo-response', function (Request $request) {
     //redirect()->with(): flash session: thường dùng để thông báo message vì nó có thời gian sống rất ngắn(chỉ hiển thị 1 lần)
     return redirect()->route('demo-response')->with('mess', 'No data');
 });
+
+Route::get('download-image', [HomeController::class, 'downloadImage'])->name('download-image');
