@@ -78,6 +78,9 @@ Route::middleware('auth.admin')->prefix('admin')->group(function () {
     Route::middleware('auth.admin.product')->resource('products', ProductsController::class);
 });
 
+Route::get('users/san-pham', [HomeController::class, 'listProducts']);
+
+
 Route::get('get-info', [HomeController::class, 'getArray']);
 
 Route::get('demo-response', function () {

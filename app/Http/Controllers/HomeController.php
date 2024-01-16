@@ -29,20 +29,28 @@ class HomeController extends Controller
         //  dd($contentView);
         //  echo $contentView;
 
-        $this->data['title'] = 'Welcome to my website';
-        $this->data['content'] = 'Today we learn about Framework Laravel <b>PHP</b> 10.x';
-        $this->data['description'] = '<h1>What is PHP?</h1>';
-        $this->data['index'] = 1;
-        $this->data['dataArr'] = [
-            'item1',
-            'item2',
-            'item3',
-        ];
-        $this->data['skey'] = 6;
-        $this->data['number'] = 2;
-        return view('homeBlade', $this->data);
+        // $this->data['title'] = 'Welcome to my website';
+        // $this->data['content'] = 'Today we learn about Framework Laravel <b>PHP</b> 10.x';
+        // $this->data['description'] = '<h1>What is PHP?</h1>';
+        // $this->data['index'] = 1;
+        // $this->data['dataArr'] = [
+        //     'item1',
+        //     'item2',
+        //     'item3',
+        // ];
+        // $this->data['skey'] = 6;
+        // $this->data['number'] = 2;
+        // $this->data['message'] = 'Đặt hàng thành công!';
+        // return view('homeBlade', $this->data);
+
+        $this->data['course'] = 'Laravel';
+        return view('clients.home', $this->data);
     }
 
+    public function  listProducts()
+    {
+        return view('clients.products.list');
+    }
     public function getDetail($id)
     {
         $name = 'Inphone 15 PRO MAX';

@@ -70,6 +70,20 @@
                 <p>No key</p>
         @endswitch
 
+        <hr>
+        @verbatim
+            Hello {{ name }}
+        @endverbatim
+
+
+        {{-- C1 --}}
+        {{-- @php
+            $message = 'Đặt hàng thành công';
+        @endphp --}}
+
+        @include('parts.notice')
+
+
     </header>
     <main>
         <h1> Noi dung Unicode </h1>
