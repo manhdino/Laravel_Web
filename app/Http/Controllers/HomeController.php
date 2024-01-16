@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use League\CommonMark\Extension\DescriptionList\Node\Description;
 
 class HomeController extends Controller
 {
+
+    public $data = [];
     public function index()
     {
-        $title = "Learn Laravel PHP Framework";
-        $content = 'Learn Laravel 8x Framework';
+        // $title = "Learn Laravel PHP Framework";
+        // $content = 'Learn Laravel 8x Framework';
         // $dataView = [
         //     'title' => $title,
         //     'content' => $content,
@@ -19,12 +22,25 @@ class HomeController extends Controller
         //return view('home', compact('title', 'content')); // chuyển sang dạng mảng như trên(2 cách dùng giống hệt nhau)
         // return view('home', with(['title' => $title, 'content' => $content]));
         // return View::make('home', compact('title', 'content'));
-        return view('homeBlade', compact('title', 'content'));
+        // return view('homeBlade', compact('title', 'content'));
         //$contentView = view('home');
         //  dd($contentView); //var_dump
         //  $contentView = $contentView->render();
         //  dd($contentView);
         //  echo $contentView;
+
+        $this->data['title'] = 'Welcome to my website';
+        $this->data['content'] = 'Today we learn about Framework Laravel <b>PHP</b> 10.x';
+        $this->data['description'] = '<h1>What is PHP?</h1>';
+        $this->data['index'] = 1;
+        $this->data['dataArr'] = [
+            'item1',
+            'item2',
+            'item3',
+        ];
+        $this->data['skey'] = 6;
+        $this->data['number'] = 2;
+        return view('homeBlade', $this->data);
     }
 
     public function getDetail($id)
