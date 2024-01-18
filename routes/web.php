@@ -42,13 +42,20 @@ use Illuminate\Http\Request;
 // })->name('home');
 
 //*Pass data to view by constroller
-Route::middleware('auth.admin')->get('/', [HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth.admin')->get('products', [HomeController::class, 'listProducts'])->name('home.products');
 Route::middleware('auth.admin')->get('errors', function () {
     return view('errors.404');
 })->name('errors');
-Route::middleware('auth.admin')->prefix('categories')->group(function () {
+
+Route::middleware('auth.admin')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('products', [HomeController::class, 'listProducts'])->name('home.products');
+    Route::get('product/add', [HomeController::class, 'addProduct'])->name('home.product.add');
+    Route::post('product/add', [HomeController::class, 'handleAddProduct']);
+    Route::put('product/add', [HomeController::class, 'updateProduct']);
+});
+
+Route::middleware('auth.admin')->prefix('admin')->group(function () {
 
     // Danh sách chuyên mục
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');

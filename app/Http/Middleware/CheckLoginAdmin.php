@@ -21,6 +21,7 @@ class CheckLoginAdmin
         // dd($request);
         if ($request->is('admin/*') || $request->is('admin')) {
             echo '<h3>Admin Section</h3>';
+            return $next($request);
         }
         echo '<h2>Client Section</h2>';
         return $next($request);

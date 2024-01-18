@@ -1,6 +1,7 @@
 @extends('layouts.client')
+
 @section('title')
-    Trang chủ {{ $course }}
+    Trang chủ
 @endsection
 
 @section('content')

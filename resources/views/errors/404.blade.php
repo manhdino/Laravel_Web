@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap 5 404 Error Page</title>
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/bootstrap.min.css') }}" />
+    <title>NotFound Page</title>
 </head>
 
 
@@ -17,7 +18,7 @@
             <p class="lead">
                 The page you’re looking for doesn’t exist.
             </p>
-            <a href="index.html" class="btn btn-primary">Go Home</a>
+            <a href="{{ route('home') }}" class="btn btn-primary">Go Home</a>
         </div>
     </div>
 </body>

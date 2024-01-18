@@ -13,16 +13,16 @@
                     <a class="nav-link active" href="{{ route('home') }}">Giới thiệu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('home.products') }}">Sản phẩm</a>
+                    <a class="nav-link active" href="{{ route('errors') }}">Sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('home.services') ?? route('errors') }}">Dịch vụ</a>
+                    <a class="nav-link active" href="{{ route('home') }}">Dịch vụ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('home.news') ?? route('errors') }}">Tin tức</a>
+                    <a class="nav-link active" href="{{ route('home') }}">Tin tức</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('home.contact') ?? route('errors') }}">Liên hệ</a>
+                    <a class="nav-link active" href="{{ route('home') }}">Liên hệ</a>
                 </li>
             </ul>
         </div>

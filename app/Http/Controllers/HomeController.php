@@ -42,14 +42,26 @@ class HomeController extends Controller
         // $this->data['number'] = 2;
         // $this->data['message'] = 'Đặt hàng thành công!';
         // return view('homeBlade', $this->data);
-
-        $this->data['course'] = 'Laravel';
         return view('clients.home', $this->data);
     }
 
     public function  listProducts()
     {
-        return view('clients.products.list');
+        return view('clients.products.list', $this->data);
+    }
+    public function addProduct()
+    {
+        $this->data['title'] = 'Thêm sản phẩm';
+        return view('clients.products.add', $this->data);
+    }
+
+    public function handleAddProduct(Request $request)
+    {
+        dd($request);
+    }
+    public function updateProduct(Request $request)
+    {
+        dd($request);
     }
     public function getDetail($id)
     {

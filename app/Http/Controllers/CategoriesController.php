@@ -12,8 +12,8 @@ class CategoriesController extends Controller
          * Nếu là trang danh sách chuyên mục --> hiển thị ra dòng chữ xin chào Unicode
          * 
          */
-        if ($request->is('categories')) {
-            echo 'Hello Unicode';
+        if ($request->is('admin')) {
+            echo 'Hello Administrator!';
         }
     }
 
