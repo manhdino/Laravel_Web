@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    @hello('dinomanh')
     <h1>Trang chủ Home</h1>
 @endsection
 
