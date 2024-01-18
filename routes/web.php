@@ -44,7 +44,10 @@ use Illuminate\Http\Request;
 //*Pass data to view by constroller
 Route::middleware('auth.admin')->get('/', [HomeController::class, 'index'])->name('home');
 
-
+Route::middleware('auth.admin')->get('products', [HomeController::class, 'listProducts'])->name('home.products');
+Route::middleware('auth.admin')->get('errors', function () {
+    return view('errors.404');
+})->name('errors');
 Route::middleware('auth.admin')->prefix('categories')->group(function () {
 
     // Danh sách chuyên mục
@@ -71,82 +74,83 @@ Route::middleware('auth.admin')->prefix('categories')->group(function () {
 });
 
 
-Route::get('san-pham/{id}', [HomeController::class, 'getDetail']);
 
-Route::middleware('auth.admin')->prefix('admin')->group(function () {
-    Route::resource('/', DashboardController::class);
-    Route::middleware('auth.admin.product')->resource('products', ProductsController::class);
-});
+// Route::get('san-pham/{id}', [HomeController::class, 'getDetail']);
 
-Route::get('users/san-pham', [HomeController::class, 'listProducts']);
-
-
-Route::get('get-info', [HomeController::class, 'getArray']);
-
-Route::get('demo-response', function () {
-
-    //Response trả về trình duyệt từ Server     
-    //C1: sd class Response
-    // $response = new Response('Hoc lap trinh tai Unicode', 201);
-    // dd($response);
-    // return $response;
-
-    //C2: sd helper response
-    // $response = response('Học lập trình tại Unicode', 200);
-    // dd(response());
-    // return $response;
+// Route::middleware('auth.admin')->prefix('admin')->group(function () {
+//     Route::resource('/', DashboardController::class);
+//     Route::middleware('auth.admin.product')->resource('products', ProductsController::class);
+// });
 
 
-    // Gán header vào Response
-    // $content = 'Học lập trình tại Unicode';
-    // $response = (new Response($content, 200))->header('Content-Type', 'text/plain');
 
-    // $content = json_encode([
-    //     'Item1',
-    //     'Item2',
-    //     'Item3'
-    // ]);
-    // $response = (new Response($content, 200))->header('Content-Type', 'application/json');
-    // return $response;
 
-    //Gán cookie vào Response
-    // $response = (new Response)->cookie('unicode', 'Học lập trình PHP - Laravel', 30); //cookie tồn tại trong 30 phút
-    // return $response;
+// Route::get('get-info', [HomeController::class, 'getArray']);
 
-    //Gán view vào Response
-    //C1: Thông thường
-    // return view('clients.demo');
-    //C2: Sd qua helper response()
-    // $title = 'Laravel';
-    // $content = 'Learn Laravel Application PHP 10.x';
-    // $response = response()->view('clients.demo', compact('title', 'content'), 200)->header('Content-Type', 'text/html');
-    // return $response;
+// Route::get('demo-response', function () {
 
-    //Method json()
-    // $profile = [
-    //     'name' => 'Dinomanh',
-    //     'email' => 'manhnguyen@gmail.com',
-    //     'password' => '12345'
-    // ];
-    // return response()->json($profile)->header('Content-Type', 'application/json');
+//     //Response trả về trình duyệt từ Server     
+//     //C1: sd class Response
+//     // $response = new Response('Hoc lap trinh tai Unicode', 201);
+//     // dd($response);
+//     // return $response;
 
-    //redirect():thường dùng để chuyển hướng từ phương thức POST về phương thức GET
-    // echo old('username');
-    return view('clients.demo');
-})->name('demo-response');
+//     //C2: sd helper response
+//     // $response = response('Học lập trình tại Unicode', 200);
+//     // dd(response());
+//     // return $response;
 
-Route::get('demo-response-2', function (Request $request) {
-    // dd($request);
-    return $request->cookie('unicode');
-});
 
-Route::post('demo-response', function (Request $request) {
-    if (!empty($request->username)) {
-        // return redirect()->route('demo-response');
-        return back()->withInput()->with('mess', 'Success');
-    }
-    //redirect()->with(): flash session: thường dùng để thông báo message vì nó có thời gian sống rất ngắn(chỉ hiển thị 1 lần)
-    return redirect()->route('demo-response')->with('mess', 'No data');
-});
+//     // Gán header vào Response
+//     // $content = 'Học lập trình tại Unicode';
+//     // $response = (new Response($content, 200))->header('Content-Type', 'text/plain');
 
-Route::get('download-image', [HomeController::class, 'downloadImage'])->name('download-image');
+//     // $content = json_encode([
+//     //     'Item1',
+//     //     'Item2',
+//     //     'Item3'
+//     // ]);
+//     // $response = (new Response($content, 200))->header('Content-Type', 'application/json');
+//     // return $response;
+
+//     //Gán cookie vào Response
+//     // $response = (new Response)->cookie('unicode', 'Học lập trình PHP - Laravel', 30); //cookie tồn tại trong 30 phút
+//     // return $response;
+
+//     //Gán view vào Response
+//     //C1: Thông thường
+//     // return view('clients.demo');
+//     //C2: Sd qua helper response()
+//     // $title = 'Laravel';
+//     // $content = 'Learn Laravel Application PHP 10.x';
+//     // $response = response()->view('clients.demo', compact('title', 'content'), 200)->header('Content-Type', 'text/html');
+//     // return $response;
+
+//     //Method json()
+//     // $profile = [
+//     //     'name' => 'Dinomanh',
+//     //     'email' => 'manhnguyen@gmail.com',
+//     //     'password' => '12345'
+//     // ];
+//     // return response()->json($profile)->header('Content-Type', 'application/json');
+
+//     //redirect():thường dùng để chuyển hướng từ phương thức POST về phương thức GET
+//     // echo old('username');
+//     return view('clients.demo');
+// })->name('demo-response');
+
+// Route::get('demo-response-2', function (Request $request) {
+//     // dd($request);
+//     return $request->cookie('unicode');
+// });
+
+// Route::post('demo-response', function (Request $request) {
+//     if (!empty($request->username)) {
+//         // return redirect()->route('demo-response');
+//         return back()->withInput()->with('mess', 'Success');
+//     }
+//     //redirect()->with(): flash session: thường dùng để thông báo message vì nó có thời gian sống rất ngắn(chỉ hiển thị 1 lần)
+//     return redirect()->route('demo-response')->with('mess', 'No data');
+// });
+
+// Route::get('download-image', [HomeController::class, 'downloadImage'])->name('download-image');

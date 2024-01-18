@@ -14,14 +14,24 @@
 <body>
     @include('clients.blocks.header')
     <main>
-        <aside>
-            @section('sidebar')
-                @include('clients.blocks.sidebar')
-            @show
-        </aside>
-        <div class="content">
-            @yield('content')
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <aside>
+                        @section('sidebar')
+                            @include('clients.blocks.sidebar')
+                        @show
+                    </aside>
+                </div>
+                <div class="col-8">
+                    <div class="content">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     </main>
     @include('clients.blocks.footer')
     <script src="{{ asset('assets/clients/js/bootstrap.min.js') }}"></script>

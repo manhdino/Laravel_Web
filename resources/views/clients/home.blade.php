@@ -2,22 +2,24 @@
 @section('title')
     Trang chủ {{ $course }}
 @endsection
+
 @section('content')
-    <h2>Trang chủ</h2>
+    <h1>Trang chủ Home</h1>
 @endsection
+
 @section('sidebar')
     @parent
     <h1>Home Sidebar</h1>
-    <button type="button" class="show">Show</button>
+    {{-- <button type="button" class="show">Show</button> --}}
 @endsection
 
 @section('css')
 @endsection
 
 @section('js')
-    <script>
+    {{-- <script>
         document.querySelector('.show').onclick = function() {
             alert('Thành công!');
         };
-    </script>
+    </script> --}}
 @endsection
