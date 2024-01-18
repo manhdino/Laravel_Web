@@ -7,6 +7,13 @@
 @section('content')
     @hello('dinomanh')
     <h1>Trang chủ Home</h1>
+    @env('production')
+    <p>Production Enviroment</p>
+    @elseenv('test')
+    <p>Test Enviroment</p>
+@else
+    <p>Dev Enviroment</p>
+    @endenv
 @endsection
 
 @section('sidebar')

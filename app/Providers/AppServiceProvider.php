@@ -23,5 +23,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('hello', function ($expression) {
             return "<?php echo 'Hello '. {$expression} .','; ?>";
         });
+
+        Blade::if('env', function ($environment) {
+            if (config('app.env') == $environment) {
+                return true;
+            }
+            return false;
+        });
     }
 }
