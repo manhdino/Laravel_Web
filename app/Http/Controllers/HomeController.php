@@ -40,7 +40,7 @@ class HomeController extends Controller
         // ];
         // $this->data['skey'] = 6;
         // $this->data['number'] = 2;
-        // $this->data['message'] = 'Đặt hàng thành công!';
+        $this->data['content'] = 'Đặt hàng thành công!';
         // return view('homeBlade', $this->data);
         return view('clients.home', $this->data);
     }
