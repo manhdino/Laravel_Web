@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use League\CommonMark\Extension\DescriptionList\Node\Description;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -56,17 +57,17 @@ class HomeController extends Controller
         return view('clients.products.add', $this->data);
     }
 
-    public function handleAddProduct(ProductRequest $request)
+    public function handleAddProduct(Request $request)
     {
         //Validation
 
         //C1: sử dụng method validate()
         //Nếu validate không thành công Laravel sẽ tự động redirect về Request trước 
         //kèm theo thông báo được gán vào Flash Session
-        // $rules = [
-        //     'product_name' => 'required|min:6',
-        //     'product_price' => 'required|integer'
-        // ];
+        $rules = [
+            'product_name' => 'required|min:6',
+            'product_price' => 'required|integer'
+        ];
 
         //C1.1
         // $messages = [
@@ -77,11 +78,16 @@ class HomeController extends Controller
         // ];
 
         //C1.2:
-        // $messages = [
-        //     'required' => ':attribute bắt buộc phải nhập',
-        //     'min' => ':attribute phải có ít nhất :min kí tự',
-        //     'integer' => ':attribute phải là 1 số nguyên',
-        // ];
+        $messages = [
+            'required' => ':attribute bắt buộc phải nhập',
+            'min' => ':attribute phải có ít nhất :min kí tự',
+            'integer' => ':attribute phải là 1 số nguyên',
+        ];
+
+        $attributes = [
+            'product_name' => 'Tên sản phẩm',
+            'product_price' => 'Giá sản phẩm'
+        ];
 
         // $request->validate($rules, $messages);
 
@@ -89,8 +95,21 @@ class HomeController extends Controller
         //C2: Validation sử dụng Form Request
         // thay tham số truyền vào là class Request thành ProductRequest
 
+
+        //C3: sd class Validator
+        //C3.1 Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+        //C3.2 
+        $validator = Validator::make($request->all(), $rules, $messages, $attributes);
+        $request->flash();
+        if ($validator->fails()) {
+            $validator->errors()->add('msg', 'Đã có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu.');
+        } else {
+            return redirect()->route('home.products')->with('msg', 'Thêm sản phẩm thành công');
+        }
+        return back()->withErrors($validator);
+
         //Xử lý thêm dữ liệu vào DB
-        dd($request->all());
+        // dd($request->all());
     }
     public function updateProduct(Request $request)
     {

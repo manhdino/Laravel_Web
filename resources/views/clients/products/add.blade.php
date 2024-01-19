@@ -31,8 +31,8 @@
         </div>
         <div class="mb-3">
             <label for="product_price">Tên sản phẩm</label>
-            <input type="text" name="product_price" id="product_price" class="form-control"
-                placeholder="Giá sản phẩm..." />
+            <input type="text" name="product_price" id="product_price" class="form-control" placeholder="Giá sản phẩm..."
+                value="{{ old('product_price') }}" />
             @error('product_price')
                 <span style="color:red">{{ $message }}</span>
             @enderror

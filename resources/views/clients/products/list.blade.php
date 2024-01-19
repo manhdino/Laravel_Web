@@ -5,6 +5,11 @@
 @endsection
 
 @section('content')
+    @if (session('msg'))
+        <div class="alert alert-success text-center">
+            {{ session('msg') }}
+        </div>
+    @endif
     <h2>Danh sách sản phẩm</h2>
 @endsection
 
