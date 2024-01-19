@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use League\CommonMark\Extension\DescriptionList\Node\Description;
+use App\Http\Requests\ProductRequest;
 
 class HomeController extends Controller
 {
@@ -55,19 +56,19 @@ class HomeController extends Controller
         return view('clients.products.add', $this->data);
     }
 
-    public function handleAddProduct(Request $request)
+    public function handleAddProduct(ProductRequest $request)
     {
         //Validation
 
         //C1: sử dụng method validate()
         //Nếu validate không thành công Laravel sẽ tự động redirect về Request trước 
         //kèm theo thông báo được gán vào Flash Session
-        $rules = [
-            'product_name' => 'required|min:6',
-            'product_price' => 'required|integer'
-        ];
+        // $rules = [
+        //     'product_name' => 'required|min:6',
+        //     'product_price' => 'required|integer'
+        // ];
 
-        //C1
+        //C1.1
         // $messages = [
         //     'product_name.required' => ':attribute bắt buộc phải nhập',
         //     'product_price.required' => ':attribute bắt buộc phải nhập',
@@ -75,15 +76,18 @@ class HomeController extends Controller
         //     'product_price.integer' => ':attribute phải là 1 số nguyên'
         // ];
 
-        //C2:
-        $messages = [
-            'required' => ':attribute bắt buộc phải nhập',
-            'min' => ':attribute phải có ít nhất :min kí tự',
-            'integer' => ':attribute phải là 1 số nguyên',
-        ];
+        //C1.2:
+        // $messages = [
+        //     'required' => ':attribute bắt buộc phải nhập',
+        //     'min' => ':attribute phải có ít nhất :min kí tự',
+        //     'integer' => ':attribute phải là 1 số nguyên',
+        // ];
 
-        $request->validate($rules, $messages);
+        // $request->validate($rules, $messages);
 
+
+        //C2: Validation sử dụng Form Request
+        // thay tham số truyền vào là class Request thành ProductRequest
 
         //Xử lý thêm dữ liệu vào DB
         // dd($request);
