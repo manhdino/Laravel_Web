@@ -51,7 +51,7 @@ class HomeController extends Controller
         $user = DB::select('SELECT * FROM users WHERE email =:email', [
             'email' => 'dinomanh3@gmail.com'
         ]);
-        dd($user);
+
 
         // return view('homeBlade', $this->data);
         return view('clients.home', $this->data);
