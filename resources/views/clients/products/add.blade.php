@@ -7,11 +7,17 @@
 @section('content')
     <h2>Thêm sản phẩm</h2>
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-danger text-center">
             Vui lòng kiểm tra lại dữ liệu
         </div>
-    @endif
+    @endif --}}
+
+    @error('msg')
+        <div class="alert alert-danger text-center">
+            {{ $message }}
+        </div>
+    @enderror
     <form action="" method="POST">
         <div class="mb-3">
             <label for="product_name">Tên sản phẩm</label>

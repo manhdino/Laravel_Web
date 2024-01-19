@@ -90,7 +90,7 @@ class HomeController extends Controller
         // thay tham số truyền vào là class Request thành ProductRequest
 
         //Xử lý thêm dữ liệu vào DB
-        // dd($request);
+        dd($request->all());
     }
     public function updateProduct(Request $request)
     {

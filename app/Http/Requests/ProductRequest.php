@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class ProductRequest extends FormRequest
 {
@@ -43,5 +44,32 @@ class ProductRequest extends FormRequest
             'product_name' => 'Tên sản phẩm',
             'product_price' => 'Giá sản phẩm'
         ];
+    }
+    /**
+     * Get the "after" validation callables for the request.
+     */
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                // dd($validator);
+                if ($validator->errors()->count() > 0) {
+                    $validator->errors()->add(
+                        'msg',
+                        'Đã có lỗi xảy ra, vui lòng kiểm tra lại'
+                    );
+                }
+            }
+        ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 }
