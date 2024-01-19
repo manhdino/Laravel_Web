@@ -52,7 +52,7 @@ Route::middleware('auth.admin')->group(function () {
     Route::get('products', [HomeController::class, 'listProducts'])->name('home.products');
     Route::get('product/add', [HomeController::class, 'addProduct'])->name('home.product.add');
     Route::post('product/add', [HomeController::class, 'handleAddProduct']);
-    Route::put('product/add', [HomeController::class, 'updateProduct']);
+    Route::put('product/add', [HomeController::class, '<u></u>pdateProduct']);
 });
 
 Route::middleware('auth.admin')->prefix('admin')->group(function () {

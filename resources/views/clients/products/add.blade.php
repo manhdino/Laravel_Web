@@ -6,11 +6,34 @@
 
 @section('content')
     <h2>Thêm sản phẩm</h2>
+
+    @if ($errors->any())
+        <div class="alert alert-danger text-center">
+            Vui lòng kiểm tra lại dữ liệu
+        </div>
+    @endif
     <form action="" method="POST">
-        <input type="text" name="username" />
-        <button type="submit">Submit</button>
+        <div class="mb-3">
+            <label for="product_name">Tên sản phẩm</label>
+            <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Tên sản phẩm..."
+                value="{{ old('product_name') }}" />
+
+            @error('product_name')
+                <span style="color:
+                red">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="product_price">Tên sản phẩm</label>
+            <input type="text" name="product_price" id="product_price" class="form-control"
+                placeholder="Giá sản phẩm..." />
+            @error('product_price')
+                <span style="color:red">{{ $message }}</span>
+            @enderror
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm mới</button>
         @csrf
-        @method('PUT')
+        {{-- @method('PUT') --}}
     </form>
 @endsection
 

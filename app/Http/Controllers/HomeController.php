@@ -57,7 +57,36 @@ class HomeController extends Controller
 
     public function handleAddProduct(Request $request)
     {
-        dd($request);
+        //Validation
+
+        //C1: sử dụng method validate()
+        //Nếu validate không thành công Laravel sẽ tự động redirect về Request trước 
+        //kèm theo thông báo được gán vào Flash Session
+        $rules = [
+            'product_name' => 'required|min:6',
+            'product_price' => 'required|integer'
+        ];
+
+        //C1
+        // $messages = [
+        //     'product_name.required' => ':attribute bắt buộc phải nhập',
+        //     'product_price.required' => ':attribute bắt buộc phải nhập',
+        //     'product_name.min' => ':attribute phải có ít nhất :min kí tự',
+        //     'product_price.integer' => ':attribute phải là 1 số nguyên'
+        // ];
+
+        //C2:
+        $messages = [
+            'required' => ':attribute bắt buộc phải nhập',
+            'min' => ':attribute phải có ít nhất :min kí tự',
+            'integer' => ':attribute phải là 1 số nguyên',
+        ];
+
+        $request->validate($rules, $messages);
+
+
+        //Xử lý thêm dữ liệu vào DB
+        // dd($request);
     }
     public function updateProduct(Request $request)
     {
