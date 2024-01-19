@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Closure;
+use App\Rules\Uppercase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use League\CommonMark\Extension\DescriptionList\Node\Description;
@@ -57,6 +59,12 @@ class HomeController extends Controller
         return view('clients.products.add', $this->data);
     }
 
+    // public function isUppercase($attribute, $value, $fail)
+    // {
+    //     if (strtoupper($value) !== $value) {
+    //         $fail(':attribute phải viết hoa');
+    //     }
+    // }
     public function handleAddProduct(Request $request)
     {
         //Validation
@@ -64,11 +72,23 @@ class HomeController extends Controller
         //C1: sử dụng method validate()
         //Nếu validate không thành công Laravel sẽ tự động redirect về Request trước 
         //kèm theo thông báo được gán vào Flash Session
+
+        //normal rules
+        // $rules = [
+        //     'product_name' => 'required|min:6',
+        //     'product_price' => 'required|integer'
+        // ];
+
+        //custom rules 
         $rules = [
-            'product_name' => 'required|min:6',
+            //  'product_name' => ['required', 'min:6', new Uppercase], //using Rule Object
+            'product_name' => ['required', 'min:6', function (string $attribute, mixed $value, Closure $fail) { //using Closure 
+                if (strtoupper($value) !== $value) {
+                    $fail(":attribute phải viết hoa");
+                }
+            }],
             'product_price' => 'required|integer'
         ];
-
         //C1.1
         // $messages = [
         //     'product_name.required' => ':attribute bắt buộc phải nhập',
