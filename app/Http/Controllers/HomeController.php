@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 use League\CommonMark\Extension\DescriptionList\Node\Description;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -45,6 +46,13 @@ class HomeController extends Controller
         // $this->data['skey'] = 6;
         // $this->data['number'] = 2;
         $this->data['content'] = 'Đặt hàng thành công!';
+        // $user = DB::select('select * from users');
+        // $user = DB::select('SELECT * FROM users WHERE id = ?', [4]);
+        $user = DB::select('SELECT * FROM users WHERE email =:email', [
+            'email' => 'dinomanh3@gmail.com'
+        ]);
+        dd($user);
+
         // return view('homeBlade', $this->data);
         return view('clients.home', $this->data);
     }

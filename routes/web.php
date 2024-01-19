@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Response;
@@ -43,6 +44,8 @@ use Illuminate\Http\Request;
 
 //*Pass data to view by constroller
 
+
+// Admin
 Route::middleware('auth.admin')->get('errors', function () {
     return view('errors.404');
 })->name('errors');
@@ -80,6 +83,12 @@ Route::middleware('auth.admin')->prefix('admin')->group(function () {
     Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.uploadFile');
 });
 
+
+//Users
+
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+});
 
 
 // Route::get('san-pham/{id}', [HomeController::class, 'getDetail']);
