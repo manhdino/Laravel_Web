@@ -38,4 +38,9 @@ class Users extends Model
     {
         return DB::delete('DELETE FROM ' . $this->table . ' WHERE id=?', [$id]);
     }
+
+    public function statement($sql) //Thực thi bất cứ câu lệnh Sql nào nhưng chỉ trả về trạng thái true/false
+    {
+        return DB::statement($sql);
+    }
 }

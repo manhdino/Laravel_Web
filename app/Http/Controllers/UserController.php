@@ -16,6 +16,9 @@ class UserController extends Controller
     {
         $title = 'Danh sách người dùng';
 
+        // $statement = $this->users->statement('SELECT * FROM users');
+        // dd($statement);
+
         $usersList = $this->users->getAllUsers();
         //dd($users);
 
