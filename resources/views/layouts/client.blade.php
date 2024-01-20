@@ -16,14 +16,14 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-2">
                     <aside>
                         @section('sidebar')
                             @include('clients.blocks.sidebar')
                         @show
                     </aside>
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                     <div class="content">
                         @yield('content')
                     </div>

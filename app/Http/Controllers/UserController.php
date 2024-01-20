@@ -4,25 +4,58 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Users;
+use App\Models\Groups;
 
 class UserController extends Controller
 {
     private $users;
+    private $groups;
+
+    const _PER_PAGE = 3;
     public function __construct()
     {
         $this->users = new Users();
+        $this->groups = new Groups();
     }
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Danh sách người dùng';
 
         // $statement = $this->users->statement('SELECT * FROM users');
         // dd($statement);
-        $this->users->learnQueryBuilder();
-        $usersList = $this->users->getAllUsers();
-        //dd($users);
+        // $this->users->learnQueryBuilder();
 
-        return view('clients.users.list', compact('title', 'usersList'));
+        $filters = [];
+
+        if (!empty($request->status)) {
+            $status = $request->status;
+            // dd($status);
+            if ($status == 'active') {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+            $filters[] = ['users.status', '=', $status];
+        }
+        if (!empty($request->group_id)) {
+            $group_id = $request->group_id;
+            // dd($status);
+            $filters[] = ['users.group_id', '=', $group_id];
+        }
+
+        $keywords = null;
+        if (!empty($request->keywords)) {
+            $keywords = $request->keywords;
+        }
+
+
+        $usersList = $this->users->getAllUsers($filters, Self::_PER_PAGE, $keywords);
+        $groupsList = $this->groups->getAllGroups();
+
+        //dd($users);
+        // dd($groupsList);
+
+        return view('clients.users.list', compact('title', 'usersList', 'groupsList'));
     }
 
     public function add()

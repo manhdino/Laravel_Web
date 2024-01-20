@@ -5,16 +5,34 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
+
 
 class Users extends Model
 {
     use HasFactory;
 
     protected $table = 'users';
-    public function getAllUsers()
+    public function getAllUsers($filters, $perPage = 0, $keywords)
     {
-        $users = DB::select('SELECT * FROM ' . $this->table . ' ORDER BY created_at ASC');
+        // $users = DB::select('SELECT * FROM ' . $this->table . ' ORDER BY created_at ASC');
+        $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->join('groups', 'users.group_id', '=', 'groups.id')->orderBy('created_at', 'asc');
+        if (!empty($filters)) {
+            $users = $users->where($filters);
+        }
+        if (!empty($keywords)) {
+            $users = $users->where(function ($query) use ($keywords) {
+                $query->orWhere('fullname', 'like', '%' . $keywords . '%');
+                $query->orWhere('email', 'like', '%' . $keywords . '%');
+            });
+        }
+        if (!empty($perPage)) {
+            $users = $users->paginate($perPage);
+        } else {
+            $users = $users->get(); //Query mặc định với status = 0 và groups = all
+        }
+
+
+        //  dd($users);
         return $users;
     }
 
@@ -142,7 +160,9 @@ class Users extends Model
         // dd($id);
 
         //Đếm số bản ghi
-        $count = DB::table($this->table)->where('id', '>=', 10)->count();
-        dd($count);
+        // $count = DB::table($this->table)->where('id', '>=', 10)->count();
+        // dd($count);
+
+
     }
 }
