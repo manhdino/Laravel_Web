@@ -19,7 +19,9 @@
                 <th width="5%">STT</th>
                 <th>Tên</th>
                 <th>Email</th>
-                <th width="20%">Thời gian</th>
+                <th width="23%">Thời gian</th>
+                <th width="7%">Sửa</th>
+                <th width="7%">Xóa</th>
             </tr>
         </thead>
         <tbody>
@@ -30,11 +32,14 @@
                         <td>{{ $item->fullname }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->created_at }}</td>
+                        <td><a href="{{ route('users.update', ['id' => $item->id]) }}" class="btn btn-warning btn-sm">Sửa</a>
+                        </td>
+                        <td><a href="" class="btn btn-danger btn-sm">Xóa</a></td>
                     </tr>
                 @endforeach
             @else
                 <tr>
-                    <td colspan="4">Không có người dùng</td>
+                    <td colspan="6">Không có người dùng</td>
                 </tr>
             @endif
 
