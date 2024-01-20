@@ -58,7 +58,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('msg', 'Thêm người dùng thành công');
     }
 
-    public function update($id = 0)
+    public function update(Request $request, $id = 0)
     {
         // dd($id);
         $title = 'Cập nhật người dùng';
@@ -67,6 +67,7 @@ class UserController extends Controller
             // dd($userDetail);
             if (!empty($userDetail[0])) {
                 $userDetail = $userDetail[0];
+                $request->session()->put('id', $id);
                 return view('clients.users.edit', compact('title', 'userDetail'));
             } else {
                 return redirect()->route('users.index')->with('msg', 'Người dùng không tồn tại');
@@ -76,8 +77,12 @@ class UserController extends Controller
         }
     }
 
-    public function postUpdate(Request $request, $id = 0)
+    public function postUpdate(Request $request)
     {
+        $id = session('id');
+        if (empty($id)) {
+            return back()->with('msg', 'Liên kết không tồn tại');
+        }
         $rules = [
             'fullname' => 'required|min:5',
             'email' => 'required|email|unique:users,email,' . $id
@@ -103,6 +108,27 @@ class UserController extends Controller
             date('Y-m-d H:i:s')
         ];
         $this->users->updateUser($dataUpdate, $id);
-        return redirect()->route('users.post-update', ['id' => $id])->with('msg', 'Cập nhật người dùng thành công');
+        return redirect()->back()->with('msg', 'Cập nhật người dùng thành công');
+    }
+
+    public function delete($id = 0)
+    {
+        if (!empty($id)) {
+            $userDetail =  $this->users->getDetail($id);
+            // dd($userDetail);
+            if (!empty($userDetail[0])) {
+                $deleteStatus = $this->users->deleteUser($id);
+                if ($deleteStatus) {
+                    $msg = 'Xóa người dùng thành công';
+                } else {
+                    $msg = 'Không thể xóa người dùng.Vui lòng kiểm tra lại';
+                }
+            } else {
+                $msg = 'Người dùng không tồn tại';
+            }
+        } else {
+            $msg = 'Liên kết không tồn tại';
+        }
+        return redirect()->route('users.index')->with('msg', $msg);
     }
 }

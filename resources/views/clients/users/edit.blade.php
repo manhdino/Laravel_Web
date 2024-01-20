@@ -14,7 +14,7 @@
     @if ($errors->any())
         <div class="alert alert-danger text-center">Dữ liệu không hợp lệ. Vui lòng nhập lại</div>
     @endif
-    <form action="" method="POST">
+    <form action="{{ route('users.post-update') }}" method="POST">
         <div class="mb-3">
             <label for="fullname">Họ và tên</label>
             <input type="text" id="fullname" class="form-control" name="fullname" placeholder="Họ và tên..."

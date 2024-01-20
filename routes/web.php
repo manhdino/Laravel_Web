@@ -91,7 +91,8 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/add', [UserController::class, 'add'])->name('add');
     Route::post('/add', [UserController::class, 'postAdd'])->name('post-add');
     Route::get('/update/{id}', [UserController::class, 'update'])->name('update');
-    Route::post('/update/{id}', [UserController::class, 'postUpdate'])->name('post-update');
+    Route::post('/update', [UserController::class, 'postUpdate'])->name('post-update');
+    Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
 });
 
 

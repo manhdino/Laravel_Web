@@ -34,12 +34,13 @@
                         <td>{{ $item->created_at }}</td>
                         <td><a href="{{ route('users.update', ['id' => $item->id]) }}" class="btn btn-warning btn-sm">Sửa</a>
                         </td>
-                        <td><a href="" class="btn btn-danger btn-sm">Xóa</a></td>
+                        <td><a href={{ route('users.delete', ['id' => $item->id]) }} class="btn btn-danger btn-sm">Xóa</a>
+                        </td>
                     </tr>
                 @endforeach
             @else
                 <tr>
-                    <td colspan="6">Không có người dùng</td>
+                    <td colspan="6" class="text-center">Không có người dùng</td>
                 </tr>
             @endif
 
