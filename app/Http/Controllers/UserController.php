@@ -61,7 +61,8 @@ class UserController extends Controller
     public function add()
     {
         $title = 'Thêm người dùng';
-        return view('clients.users.add', compact('title'));
+        $groupsList = $this->groups->getAllGroups();
+        return view('clients.users.add', compact('title', 'groupsList'));
     }
 
     public function postAdd(Request $request)
@@ -86,9 +87,11 @@ class UserController extends Controller
         $request->validate($rules, $messages, $attributes);
 
         $dataInsert = [
-            $request->fullname,
-            $request->email,
-            date('Y-m-d H:i:s')
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'group_id' => $request->group_id,
+            'status' => $request->status,
+            'created_at' => date('Y-m-d H:i:s')
         ];
         $this->users->addUser($dataInsert);
         return redirect()->route('users.index')->with('msg', 'Thêm người dùng thành công');

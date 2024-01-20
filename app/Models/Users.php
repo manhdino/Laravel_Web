@@ -15,7 +15,7 @@ class Users extends Model
     public function getAllUsers($filters, $perPage = 0, $keywords)
     {
         // $users = DB::select('SELECT * FROM ' . $this->table . ' ORDER BY created_at ASC');
-        $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->join('groups', 'users.group_id', '=', 'groups.id')->orderBy('created_at', 'asc');
+        $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->join('groups', 'users.group_id', '=', 'groups.id')->orderBy('id', 'desc');
         if (!empty($filters)) {
             $users = $users->where($filters);
         }
@@ -38,7 +38,8 @@ class Users extends Model
 
     public function addUser($data)
     {
-        DB::insert('INSERT INTO ' . $this->table . ' (fullname, email,created_at) VALUES (?,?,?)', $data);
+        // DB::insert('INSERT INTO ' . $this->table . ' (fullname, email,created_at) VALUES (?,?,?)', $data);
+        DB::table($this->table)->insert($data);
     }
 
     public function getDetail($id)
