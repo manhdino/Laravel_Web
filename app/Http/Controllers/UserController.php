@@ -18,7 +18,7 @@ class UserController extends Controller
 
         // $statement = $this->users->statement('SELECT * FROM users');
         // dd($statement);
-
+        $this->users->learnQueryBuilder();
         $usersList = $this->users->getAllUsers();
         //dd($users);
 
