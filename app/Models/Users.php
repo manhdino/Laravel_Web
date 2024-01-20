@@ -95,5 +95,24 @@ class Users extends Model
         //Right Join
         // $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->rightJoin('groups', 'users.group_id', '=', 'groups.id')->get();
         // dd($users);
+
+        //ORDER BY Sắp xếp
+        //Sắp xếp 1 cột
+        //$users = DB::table($this->table)->orderBy('fullname', 'asc')->get();
+
+        //Sắp xếp ngấu nhiên
+        // $randomUsers = DB::table($this->table)->inRandomOrder()->get();
+
+        // dd($randomUsers);
+
+
+        //GROUP BY
+        // Đếm số fullname trùng nhau( > 2) trong bảng users
+        // $countUsers = DB::table($this->table)->select(DB::raw('count(id) as fullname_count'), 'fullname')->groupBy('fullname')->having('fullname_count', '>=', 2)->get();
+        // dd($countUsers);
+
+        //LIMIT OFFSET
+        $users  = DB::table($this->table)->offset(2)->limit(2)->get();
+        dd($users);
     }
 }
