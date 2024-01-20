@@ -112,7 +112,37 @@ class Users extends Model
         // dd($countUsers);
 
         //LIMIT OFFSET
-        $users  = DB::table($this->table)->offset(2)->limit(2)->get();
-        dd($users);
+        // $users  = DB::table($this->table)->offset(2)->limit(2)->get();
+        // dd($users);
+
+        //Insert 
+        // $dataInsert = [
+        //     'fullname' => 'Dinomanh',
+        //     'email' => 'manhx6zdino@gmail.com',
+        //     'group_id' => 1,
+        //     'created_at' => date('Y-m-d H:i:s')
+        // ];
+        // DB::table($this->table)->insert($dataInsert);
+
+        //Update
+        // DB::table($this->table)->where('id', 12)->update(['fullname' => 'DinoUpdate']);
+
+        //Delete
+        // DB::table($this->table)->where('id', 12)->delete();
+
+        //Lấy Id sau khi Insert
+        // $dataInsert = [
+        //     'fullname' => 'Dinomanh',
+        //     'email' => 'manhx6zdino@gmail.com',
+        //     'group_id' => 1,
+        //     'created_at' => date('Y-m-d H:i:s')
+        // ];
+        // DB::table($this->table)->insert($dataInsert);
+        // $id = DB::getPdo()->lastInsertId();
+        // dd($id);
+
+        //Đếm số bản ghi
+        $count = DB::table($this->table)->where('id', '>=', 10)->count();
+        dd($count);
     }
 }
