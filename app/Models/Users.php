@@ -81,7 +81,19 @@ class Users extends Model
         // dd($DataQuery);
 
         //WHERE với LIKE
-        $DataQuery = DB::table($this->table)->select('*')->where('fullname', 'like', '%dinomanh%')->get();
-        dd($DataQuery);
+        // $DataQuery = DB::table($this->table)->select('*')->where('fullname', 'like', '%dinomanh%')->get();
+        // dd($DataQuery);
+
+        //JOIN Bảng
+
+        //Inner Join
+        // $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->join('groups', 'users.group_id', '=', 'groups.id')->get();
+
+        //Left Join
+        //$users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->leftJoin('groups', 'users.group_id', '=', 'groups.id')->get();
+
+        //Right Join
+        // $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->rightJoin('groups', 'users.group_id', '=', 'groups.id')->get();
+        // dd($users);
     }
 }
