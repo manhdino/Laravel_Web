@@ -94,6 +94,7 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/update/{id}', [UserController::class, 'update'])->name('update');
     Route::post('/update', [UserController::class, 'postUpdate'])->name('post-update');
     Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
+    Route::get('/learn-relation', [UserController::class, 'relations'])->name('learn-relation');
 });
 
 

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\Phone;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class Users extends Model
@@ -12,6 +14,10 @@ class Users extends Model
     use HasFactory;
 
     protected $table = 'users';
+    public function phone(): HasOne
+    {
+        return $this->hasOne(Phone::class, 'user_id', 'id');
+    }
     public function getAllUsers($filters, $perPage = 0, $keywords)
     {
         // $users = DB::select('SELECT * FROM ' . $this->table . ' ORDER BY created_at ASC');

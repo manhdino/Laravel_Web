@@ -7,6 +7,7 @@ use App\Models\Users;
 use App\Models\Groups;
 use  App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Models\Phone;
 
 class UserController extends Controller
 {
@@ -18,6 +19,23 @@ class UserController extends Controller
     {
         $this->users = new Users();
         $this->groups = new Groups();
+    }
+
+
+
+    public function relations()
+    {
+        //Có User tìm phone
+        // $phone = Users::find(10)->phone;
+        // $phone = Users::find(10)->phone();
+        // $idPhone = $phone->id;
+        // $phoneNumber = $phone->phone;
+        // echo 'idPhone: ' . $idPhone . '<br/>';
+        // echo 'phoneNumber: ' . $phoneNumber . '<br/>';
+
+        //Có phone tìm User
+        $user = Phone::where('phone', '0872151234')->first()->user;
+        dd($user);
     }
     public function index(Request $request)
     {
