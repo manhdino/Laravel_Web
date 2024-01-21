@@ -15,7 +15,7 @@ class Users extends Model
     public function getAllUsers($filters, $perPage = 0, $keywords)
     {
         // $users = DB::select('SELECT * FROM ' . $this->table . ' ORDER BY created_at ASC');
-        $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->join('groups', 'users.group_id', '=', 'groups.id')->orderBy('id', 'desc');
+        $users = DB::table($this->table)->select('users.*', 'groups.name as group_name')->join('groups', 'users.group_id', '=', 'groups.id')->where('trash', 0)->orderBy('id', 'desc');
         if (!empty($filters)) {
             $users = $users->where($filters);
         }
@@ -49,13 +49,16 @@ class Users extends Model
 
     public function updateUser($data, $id)
     {
-        $data[] = $id;
-        DB::update('UPDATE ' . $this->table . ' SET fullname=?,email=?,updated_at=? WHERE id=?', $data);
+        //$data[] = $id;
+        // DB::update('UPDATE ' . $this->table . ' SET fullname=?,email=?,updated_at=? WHERE id=?', $data);
+        DB::table($this->table)->where('id', $id)->update($data);
     }
 
     public function deleteUser($id)
     {
-        return DB::delete('DELETE FROM ' . $this->table . ' WHERE id=?', [$id]);
+        // return DB::delete('DELETE FROM ' . $this->table . ' WHERE id=?', [$id]);
+
+        return DB::table($this->table)->where('id', $id)->delete();
     }
 
     public function statement($sql) //Thực thi bất cứ câu lệnh Sql nào nhưng chỉ trả về trạng thái true/false

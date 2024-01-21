@@ -46,12 +46,12 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th width="5%">STT</th>
+                <th width="3%">STT</th>
                 <th>Tên</th>
-                <th width="25%">Email</th>
+                <th width="20%">Email</th>
                 <th width="18%">Thời gian</th>
-                <th>Nhóm</th>
-                <th>Trạng thái</th>
+                <th width="12%">Nhóm</th>
+                <th width="12%">Trạng thái</th>
                 <th width="7%">Sửa</th>
                 <th width="7%">Xóa</th>
             </tr>

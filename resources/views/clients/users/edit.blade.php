@@ -34,11 +34,12 @@
 
         <div class="mb-3">
             <label for="group_id">Nhóm</label>
-            <select name="group_id" id="" class="form-control">
+            <select name="group_id" class="form-control">
                 <option value="0">Chọn nhóm</option>
                 @if (!empty($groupsList))
                     @foreach ($groupsList as $item)
-                        <option value="{{ $item->id }}" {{ old('group_id') == $item->id ? 'selected' : false }}>
+                        <option value="{{ $item->id }}"
+                            {{ old('group_id') == $item->id || $userDetail->group_id == $item->id ? 'selected' : false }}>
                             {{ $item->name }}</option>
                     @endforeach
                 @endif
@@ -52,8 +53,10 @@
         <div class="mb-3">
             <label for="status">Trạng thái</label>
             <select name="status" id="" class="form-control">
-                <option value="0" {{ old('status') == 0 ? 'selected' : false }}>Chưa kích hoạt</option>
-                <option value="1" {{ old('status') == 1 ? 'selected' : false }}>Đã kích hoạt</option>
+                <option value="0" {{ old('status') == 0 || $userDetail->status == 0 ? 'selected' : false }}>Chưa kích
+                    hoạt</option>
+                <option value="1" {{ old('status') == 1 || $userDetail->status == 1 ? 'selected' : false }}>Đã kích
+                    hoạt</option>
             </select>
         </div>
 

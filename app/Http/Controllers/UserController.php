@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use App\Models\Groups;
+use  App\Http\Requests\UserRequest;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -69,7 +71,12 @@ class UserController extends Controller
     {
         $rules = [
             'fullname' => 'required|min:5',
-            'email' => 'required|email|unique:users'
+            'email' => 'required|email|unique:users',
+            'group_id' => ['required', 'integer', function ($attribute, $value, $fails) {
+                if ($value == 0) {
+                    $fails(':attribute bắt buộc phải chọn');
+                }
+            }],
         ];
 
         $messages = [
@@ -77,12 +84,15 @@ class UserController extends Controller
             'email.required' => ':attribute bắt buộc phải nhập',
             'fullname.min' => ':attribute phải có ít nhất :min kí tự',
             'email.email' => ':attribute không đúng định dạng',
-            'email.unique' => ':attribute đã tồn tại'
+            'email.unique' => ':attribute đã tồn tại',
+            'group_id.required' => ':attribute không được để trống',
+            'group_id.integer' => ':attribute không hợp lệ',
         ];
 
         $attributes = [
             'fullname' => 'Tên người dùng',
-            'email' => 'Email'
+            'email' => 'Email',
+            'group_id' => 'Nhóm',
         ];
         $request->validate($rules, $messages, $attributes);
 
@@ -101,13 +111,14 @@ class UserController extends Controller
     {
         // dd($id);
         $title = 'Cập nhật người dùng';
+        $groupsList = $this->groups->getAllGroups();
         if (!empty($id)) {
             $userDetail =  $this->users->getDetail($id);
             // dd($userDetail);
             if (!empty($userDetail[0])) {
                 $userDetail = $userDetail[0];
                 $request->session()->put('id', $id);
-                return view('clients.users.edit', compact('title', 'userDetail'));
+                return view('clients.users.edit', compact('title', 'userDetail', 'groupsList'));
             } else {
                 return redirect()->route('users.index')->with('msg', 'Người dùng không tồn tại');
             }
@@ -116,35 +127,53 @@ class UserController extends Controller
         }
     }
 
-    public function postUpdate(Request $request)
+    public function postUpdate(UserRequest $request)
     {
         $id = session('id');
         if (empty($id)) {
             return back()->with('msg', 'Liên kết không tồn tại');
         }
-        $rules = [
-            'fullname' => 'required|min:5',
-            'email' => 'required|email|unique:users,email,' . $id
-        ];
+        // $rules = [
+        //     'fullname' => 'required|min:5',
+        //     'email' => 'required|email|unique:users,email,' . $id,
+        //     'group_id' => ['required', 'integer', function ($attribute, $value, $fails) {
+        //         if ($value == 0) {
+        //             $fails(':attribute bắt buộc phải chọn');
+        //         }
+        //     }],
+        // ];
 
-        $messages = [
-            'fullname.required' => ':attribute bắt buộc phải nhập',
-            'email.required' => ':attribute bắt buộc phải nhập',
-            'fullname.min' => ':attribute phải có ít nhất :min kí tự',
-            'email.email' => ':attribute không đúng định dạng',
-            'email.unique' => ':attribute đã tồn tại'
-        ];
+        // $messages = [
+        //     'fullname.required' => ':attribute bắt buộc phải nhập',
+        //     'email.required' => ':attribute bắt buộc phải nhập',
+        //     'fullname.min' => ':attribute phải có ít nhất :min kí tự',
+        //     'email.email' => ':attribute không đúng định dạng',
+        //     'email.unique' => ':attribute đã tồn tại',
+        //     'group_id.required' => ':attribute không được để trống',
+        //     'group_id.integer' => ':attribute không hợp lệ',
+        // ];
 
-        $attributes = [
-            'fullname' => 'Tên người dùng',
-            'email' => 'Email'
-        ];
-        $request->validate($rules, $messages, $attributes);
+        // $attributes = [
+        //     'fullname' => 'Tên người dùng',
+        //     'email' => 'Email',
+        //     'group_id' => 'Nhóm',
+        // ];
+        // $request->validate($rules, $messages, $attributes);
 
+        // Dùng trong raw Sql
+        // $dataUpdate = [
+        //     $request->fullname,
+        //     $request->email,
+        //     date('Y-m-d H:i:s')
+        // ];
+
+        //Dùng trong query Builder
         $dataUpdate = [
-            $request->fullname,
-            $request->email,
-            date('Y-m-d H:i:s')
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'group_id' => $request->group_id,
+            'status' => $request->status,
+            'updated_at' => date('Y-m-d H:i:s')
         ];
         $this->users->updateUser($dataUpdate, $id);
         return redirect()->back()->with('msg', 'Cập nhật người dùng thành công');
