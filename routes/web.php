@@ -100,6 +100,7 @@ Route::prefix('users')->name('users.')->group(function () {
 //Posts
 Route::prefix('posts')->name('posts.')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
+    Route::get('add', [PostController::class, 'add'])->name('add');
 });
 // Route::get('san-pham/{id}', [HomeController::class, 'getDetail']);
 
