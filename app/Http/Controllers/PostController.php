@@ -17,28 +17,30 @@ class PostController extends Controller
         // $allPosts = Post::all();
         // dd($allPosts);
 
-        echo '<h2>Query Eloquent Model</h2>' . '<hr />';
+        // echo '<h2>Query Eloquent Model</h2>' . '<hr />';
 
         //Lấy tất cả bản ghi
-        echo '<h3>Tất cả bản ghi:</h3>';
+        // echo '<h3>Tất cả bản ghi:</h3>';
         $allPosts = Post::all(); // Trả về collection(trường hợp có nhiều bản ghi) nên ko thể check bằng hàm empty
-        if ($allPosts->count() > 0) {
-            foreach ($allPosts as $item) {
-                echo $item->title . '<br />';
-            }
-        }
-        echo '<hr />';
+        // if ($allPosts->count() > 0) {
+        //     foreach ($allPosts as $item) {
+        //         echo $item->title . '<br />';
+        //     }
+        // }
+        // echo '<hr />';
 
-        //Bản ghi có status = 1
-        echo '<h3>Bản ghi có status = 1</h3>';
-        $allStatus1 = $allPosts->reject(function ($post) {
-            return $post->status == 0;
-        });
-        if ($allStatus1->count() > 0) {
-            foreach ($allStatus1 as $item) {
-                echo 'status: ' . $item->status . ' title: ' . $item->title . '<br />';
-            }
-        }
+        // //Bản ghi có status = 1
+        // echo '<h3>Bản ghi có status = 1</h3>';
+        // $allStatus1 = $allPosts->reject(function ($post) {
+        //     return $post->status == 0;
+        // });
+        // if ($allStatus1->count() > 0) {
+        //     foreach ($allStatus1 as $item) {
+        //         echo 'status: ' . $item->status . ' title: ' . $item->title . '<br />';
+        //     }
+        // }
+        $title = 'Danh sách bài viết';
+        return view('clients.posts.list', compact('title', 'allPosts'));
     }
 
     public function add()
@@ -86,5 +88,28 @@ class PostController extends Controller
 
         //C3: Sử dụng updateOrCreate
         Post::updateOrCreate(['id' => $id], $dataUpdate);
+    }
+
+
+    public function delete($id)
+    {
+        $status = Post::destroy($id);
+        dd($status);
+    }
+    public function handleDeleteAny(Request $request)
+    {
+        $deleteArr = $request->delete;
+        // dd($deleteArr);
+        if (!empty($deleteArr)) {
+            $status = Post::destroy($deleteArr);
+            if ($status) {
+                $msg = 'Đã xóa ' . count($deleteArr) . 'bài viết';
+            } else {
+                $msg = 'Xóa không thành công';
+            }
+        } else {
+            $msg = 'Vui lòng chọn bài viết muốn xóa';
+        }
+        return redirect()->route('posts.index')->with('msg', $msg);
     }
 }
