@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Phone;
+use App\Models\Groups;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-
+use PhpParser\Node\Stmt\GroupUse;
 
 class Users extends Model
 {
@@ -17,6 +19,11 @@ class Users extends Model
     public function phone(): HasOne
     {
         return $this->hasOne(Phone::class, 'user_id', 'id');
+    }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Groups::class, 'group_id', 'id');
     }
     public function getAllUsers($filters, $perPage = 0, $keywords)
     {

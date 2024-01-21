@@ -9,6 +9,7 @@ use  App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\Phone;
 
+
 class UserController extends Controller
 {
     private $users;
@@ -25,6 +26,8 @@ class UserController extends Controller
 
     public function relations()
     {
+
+        //One - One 
         //Có User tìm phone
         // $phone = Users::find(10)->phone;
         // $phone = Users::find(10)->phone();
@@ -34,8 +37,30 @@ class UserController extends Controller
         // echo 'phoneNumber: ' . $phoneNumber . '<br/>';
 
         //Có phone tìm User
-        $user = Phone::where('phone', '0872151234')->first()->user;
-        dd($user);
+        // $user = Phone::where('phone', '0872151234')->first()->user;
+        // dd($user);
+
+        //One - Many
+        // $users = Groups::find(4)->users;
+        // if ($users->count() > 0) {
+        //     foreach ($users as $item) {
+        //         echo  $item->fullname . '<br />';
+        //     }
+        // }
+
+        //Tìm những Users do Administration quản lý 
+        // $user = Groups::find(1)->users()->where('id', '>', 20)->get();
+
+        // if ($user->count() > 0) {
+        //     foreach ($user as $item) {
+        //         echo  $item->fullname . '<br />';
+        //     }
+        // }
+
+        //Cho 1 User tìm xem ô nào đang quản lý Users này
+        $group = Users::find(10)->group;
+        $groupName = $group->name;
+        dd($groupName);
     }
     public function index(Request $request)
     {
