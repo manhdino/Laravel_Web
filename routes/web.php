@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,6 +97,10 @@ Route::prefix('users')->name('users.')->group(function () {
 });
 
 
+//Posts
+Route::prefix('posts')->name('posts.')->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('index');
+});
 // Route::get('san-pham/{id}', [HomeController::class, 'getDetail']);
 
 // Route::middleware('auth.admin')->prefix('admin')->group(function () {
