@@ -21,7 +21,7 @@ class PostController extends Controller
 
         //Lấy tất cả bản ghi
         // echo '<h3>Tất cả bản ghi:</h3>';
-        $allPosts = Post::all(); // Trả về collection(trường hợp có nhiều bản ghi) nên ko thể check bằng hàm empty
+        // $allPosts = Post::all(); // Trả về collection(trường hợp có nhiều bản ghi) nên ko thể check bằng hàm empty
         // if ($allPosts->count() > 0) {
         //     foreach ($allPosts as $item) {
         //         echo $item->title . '<br />';
@@ -39,6 +39,7 @@ class PostController extends Controller
         //         echo 'status: ' . $item->status . ' title: ' . $item->title . '<br />';
         //     }
         // }
+        $allPosts = Post::withTrashed()->orderBy('deleted_at', 'ASC')->get();
         $title = 'Danh sách bài viết';
         return view('clients.posts.list', compact('title', 'allPosts'));
     }
@@ -109,6 +110,30 @@ class PostController extends Controller
             }
         } else {
             $msg = 'Vui lòng chọn bài viết muốn xóa';
+        }
+        return redirect()->route('posts.index')->with('msg', $msg);
+    }
+
+    public function restore($id = 0)
+    {
+        $post = Post::onlyTrashed()->where('id', $id);
+        if (!empty($id)) {
+            $post->restore();
+            $msg = 'Khôi phục bài viết thành công';
+        } else {
+            $msg = 'Không tìm thấy bài viết';
+        }
+        return redirect()->route('posts.index')->with('msg', $msg);
+    }
+
+    public function forceDelete($id = 0)
+    {
+        $post = Post::onlyTrashed()->where('id', $id);
+        if (!empty($id)) {
+            $post->forceDelete();
+            $msg = 'Xoá vĩnh viễn bài viết thành công';
+        } else {
+            $msg = 'Không tìm thấy bài viết';
         }
         return redirect()->route('posts.index')->with('msg', $msg);
     }
