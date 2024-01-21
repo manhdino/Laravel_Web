@@ -66,4 +66,25 @@ class PostController extends Controller
         $post->save();
         dd($post);
     }
+
+    public function update($id = 0)
+    {
+
+        //Lấy ra bản ghi hiện tại
+        $post = Post::find($id);
+
+        //C1: Sử dụng save()
+        // $post->title = 'Bài viết update';
+        // $post->save();
+
+        //C2: Sử dụng update()
+        $dataUpdate = [
+            'title' => 'Bài viết update',
+            'content' => 'Nội dung bài viết update2',
+        ];
+        // $status = $post->update($dataUpdate); //Trả về kiểu boolean
+
+        //C3: Sử dụng updateOrCreate
+        Post::updateOrCreate(['id' => $id], $dataUpdate);
+    }
 }
