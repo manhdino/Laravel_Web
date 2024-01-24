@@ -10,7 +10,8 @@ use App\Models\User;
 use App\Models\Phone;
 use App\Models\Mechanics;
 use App\Models\Country;
-
+use App\Models\Categories;
+use App\Models\Post;
 
 class UserController extends Controller
 {
@@ -69,9 +70,23 @@ class UserController extends Controller
         // $carOwner = Mechanics::find(1)->carOwner;
 
         //Has Many Through
-        $allPost = Country::find(1)->posts;
+        // $allPost = Country::find(1)->posts;
+        // dd($allPost);
 
-        dd($allPost);
+        //Many to Many
+        // Cho category tìm ra tất cả bài viết liên quan
+        // $allPosts = Categories::find(2)->posts;
+        // dd($allPosts);
+
+        //Cho id bài viết tìm các categories liên quan
+        // $allCategories = Post::find(1)->categories;
+        // dd($allCategories);
+
+        //Nếu muốn lấy thêm dữ liệu của bảng trung gian(withPivot) và query data trong bảng trung gian
+        $allCategories = Post::find(1)->categories;
+        foreach ($allCategories as $category) {
+            echo $category->pivot->created_at . ' ' . $category->pivot->status . '<br />';
+        }
     }
     public function index(Request $request)
     {
