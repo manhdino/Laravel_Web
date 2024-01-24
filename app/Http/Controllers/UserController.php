@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use App\Models\Groups;
@@ -93,8 +94,31 @@ class UserController extends Controller
         // dd($phone);
 
         //Tìm bài Posts có ít nhất 2 comments 
-        $post = Post::has('comments')->get();
-        dd($post);
+        // $post = Post::has('comments')->get();
+        // dd($post);
+
+        //Trả về danh sách bài posts và có thêm 1 cột nữa là số lượng comments tương ứng với mỗi bài
+        // $posts = Post::withCount('comments as cnt-comments')->get();
+        // dd($posts);
+
+        //Lazy Load(Tải dữ liệu 1 lần sử dụng with() thay vì sd all())
+        //Lấy tất cả users 
+        //     $users = Users::with(['group' => function ($query) {
+        //         $query->where('name', 'Manager');
+        //     }])->get();
+        //     foreach ($users as $user) {
+        //         if (!empty($user->group->name)) {
+        //             echo $user->fullname . '<br/>';
+        //         }
+        //     }
+
+        //Insert new data(comment) vào bài post cụ thể
+        $post = Post::find(1);
+        $comment = new Comments([
+            'name' => 'Comment 3 Bài viết 1',
+            'content' => 'Nội dung comment 3 bài viết 1'
+        ]);
+        $post->comments()->save($comment);
     }
     public function index(Request $request)
     {
