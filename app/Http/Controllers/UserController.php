@@ -8,6 +8,7 @@ use App\Models\Groups;
 use  App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\Phone;
+use App\Models\Mechanics;
 
 
 class UserController extends Controller
@@ -58,9 +59,16 @@ class UserController extends Controller
         // }
 
         //Cho 1 User tìm xem ô nào đang quản lý Users này
-        $group = Users::find(10)->group;
-        $groupName = $group->name;
-        dd($groupName);
+        // $group = Users::find(10)->group;
+        // $groupName = $group->name;
+        // dd($groupName);
+
+        //Has On Through
+
+        $carOwner = Mechanics::find(1)->carOwner;
+
+
+        dd($carOwner);
     }
     public function index(Request $request)
     {
