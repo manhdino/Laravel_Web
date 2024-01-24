@@ -9,7 +9,7 @@ use App\Models\Phone;
 use App\Models\Groups;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use PhpParser\Node\Stmt\GroupUse;
+
 
 class Users extends Model
 {
@@ -18,7 +18,7 @@ class Users extends Model
     protected $table = 'users';
     public function phone(): HasOne
     {
-        return $this->hasOne(Phone::class, 'user_id', 'id');
+        return $this->hasOne(Phone::class, 'user_id', 'id')->withDefault(['phoneNumber' => 'Unknown']);
     }
 
     public function group(): BelongsTo

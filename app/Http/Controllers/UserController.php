@@ -83,10 +83,18 @@ class UserController extends Controller
         // dd($allCategories);
 
         //Nếu muốn lấy thêm dữ liệu của bảng trung gian(withPivot) và query data trong bảng trung gian
-        $allCategories = Post::find(1)->categories;
-        foreach ($allCategories as $category) {
-            echo $category->pivot->created_at . ' ' . $category->pivot->status . '<br />';
-        }
+        // $allCategories = Post::find(1)->categories;
+        // foreach ($allCategories as $category) {
+        //     echo $category->pivot->created_at . ' ' . $category->pivot->status . '<br />';
+        // }
+
+        //Default Mode 
+        // $phone = Users::find(10)->phone;
+        // dd($phone);
+
+        //Tìm bài Posts có ít nhất 2 comments 
+        $post = Post::has('comments')->get();
+        dd($post);
     }
     public function index(Request $request)
     {
