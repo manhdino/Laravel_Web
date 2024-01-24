@@ -9,6 +9,7 @@ use  App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\Phone;
 use App\Models\Mechanics;
+use App\Models\Country;
 
 
 class UserController extends Controller
@@ -63,12 +64,14 @@ class UserController extends Controller
         // $groupName = $group->name;
         // dd($groupName);
 
+
         //Has On Through
+        // $carOwner = Mechanics::find(1)->carOwner;
 
-        $carOwner = Mechanics::find(1)->carOwner;
+        //Has Many Through
+        $allPost = Country::find(1)->posts;
 
-
-        dd($carOwner);
+        dd($allPost);
     }
     public function index(Request $request)
     {
