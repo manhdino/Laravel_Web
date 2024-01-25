@@ -33,6 +33,6 @@
    - Truy vấn sử dụng ORM(Relation trong ORM)
 * Migration and Seeding
 * Faker and Factory
-* Authentication: trong nhánh Authen
+* Authentication: trong nhánh authenticaton
 
 
