@@ -33,4 +33,8 @@
     -   Truy vấn sử dụng ORM(Relation trong ORM)
 -   Migration and Seeding
 -   Faker and Factory
--   Authentication: trong nhánh authenticaton
+-   Authentication:
+    -   Lifecycle Request trong Auth
+    -   Login,Regiser,Confirm,Forgot,Reset,Vertification Controller
+    -   Custom lại Validation cho từng Controller(do mặc định Validation là do HTML5)
+    -   View tương ứng với từng Controller

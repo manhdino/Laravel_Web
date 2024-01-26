@@ -200,22 +200,27 @@ Route::get('/', function () {
     return '<h1>Home Page</h1>';
 });
 
+//Link thông báo verify khi đăng kí tài khoản xong nhưng ko xác thực email 
 Route::get('/email/verify', function () {
     return view('auth.verify');
 })->middleware('auth')->name('verification.notice');
 
 
 
+//Link xác thực email gửi đến email của người dùng 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
+//Link profile chỉ truy cập được nếu đã verify email bằng cách thêm middleware 'verified'
 Route::get('/profile', function () {
     return view('profile');
 })->middleware(['auth', 'verified'])->name('profile');
 
+
+//Link gửi lại link xác thực email khi người dùng ko nhận được email xác thực 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('msg', 'Link xác nhận đã được gửi lại tới email của bạn');
