@@ -1,14 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\ProductsController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\HomeController;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,67 +49,67 @@ use App\Http\Controllers\PostController;
 
 
 // Admin
-Route::middleware('auth.admin')->get('errors', function () {
-    return view('errors.404');
-})->name('errors');
+// Route::middleware('auth.admin')->get('errors', function () {
+//     return view('errors.404');
+// })->name('errors');
 
-Route::middleware('auth.admin')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('products', [HomeController::class, 'listProducts'])->name('home.products');
-    Route::get('product/add', [HomeController::class, 'addProduct'])->name('home.product.add');
-    Route::post('product/add', [HomeController::class, 'handleAddProduct']);
-    Route::put('product/add', [HomeController::class, '<u></u>pdateProduct']);
-});
+// Route::middleware('auth.admin')->group(function () {
+//     Route::get('/', [HomeController::class, 'index'])->name('home');
+//     Route::get('products', [HomeController::class, 'listProducts'])->name('home.products');
+//     Route::get('product/add', [HomeController::class, 'addProduct'])->name('home.product.add');
+//     Route::post('product/add', [HomeController::class, 'handleAddProduct']);
+//     Route::put('product/add', [HomeController::class, '<u></u>pdateProduct']);
+// });
 
-Route::middleware('auth.admin')->prefix('admin')->group(function () {
+// Route::middleware('auth.admin')->prefix('admin')->group(function () {
 
-    // Danh sách chuyên mục
-    Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');
+//     // Danh sách chuyên mục
+//     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');
 
-    // Lấy chi tiết 1 chuyên mục áp dụng show sửa chuyên mục
-    Route::get('edit/{id}', [CategoriesController::class, 'getCategory'])->name('categories.edit');
+//     // Lấy chi tiết 1 chuyên mục áp dụng show sửa chuyên mục
+//     Route::get('edit/{id}', [CategoriesController::class, 'getCategory'])->name('categories.edit');
 
-    // Xử lý update chuyên mục 
-    Route::post('edit/{id}', [CategoriesController::class, 'updateCategory']);
+//     // Xử lý update chuyên mục 
+//     Route::post('edit/{id}', [CategoriesController::class, 'updateCategory']);
 
-    // Hiển thị form add dữ liệu 
-    Route::get('/add', [CategoriesController::class, 'addCategory'])->name('categories.add');
+//     // Hiển thị form add dữ liệu 
+//     Route::get('/add', [CategoriesController::class, 'addCategory'])->name('categories.add');
 
-    //Xử lý thêm chuyên mục 
-    Route::post('/add', [CategoriesController::class, 'handleAddCategory']);
+//     //Xử lý thêm chuyên mục 
+//     Route::post('/add', [CategoriesController::class, 'handleAddCategory']);
 
-    //Xóa chuyên mục
-    Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
+//     //Xóa chuyên mục
+//     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
 
-    Route::get('/upload', [CategoriesController::class, 'getFile'])->name('categories.getFile');
-    //Xử lý file:
-    Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.uploadFile');
-});
+//     Route::get('/upload', [CategoriesController::class, 'getFile'])->name('categories.getFile');
+//     //Xử lý file:
+//     Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.uploadFile');
+// });
 
 
 //Users
 
-Route::prefix('users')->name('users.')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('index');
-    Route::get('/add', [UserController::class, 'add'])->name('add');
-    Route::post('/add', [UserController::class, 'postAdd'])->name('post-add');
-    Route::get('/update/{id}', [UserController::class, 'update'])->name('update');
-    Route::post('/update', [UserController::class, 'postUpdate'])->name('post-update');
-    Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-    Route::get('/learn-relation', [UserController::class, 'relations'])->name('learn-relation');
-});
+// Route::prefix('users')->name('users.')->group(function () {
+//     Route::get('/', [UserController::class, 'index'])->name('index');
+//     Route::get('/add', [UserController::class, 'add'])->name('add');
+//     Route::post('/add', [UserController::class, 'postAdd'])->name('post-add');
+//     Route::get('/update/{id}', [UserController::class, 'update'])->name('update');
+//     Route::post('/update', [UserController::class, 'postUpdate'])->name('post-update');
+//     Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
+//     Route::get('/learn-relation', [UserController::class, 'relations'])->name('learn-relation');
+// });
 
 
 //Posts
-Route::prefix('posts')->name('posts.')->group(function () {
-    Route::get('/', [PostController::class, 'index'])->name('index');
-    Route::get('/add', [PostController::class, 'add'])->name('add');
-    Route::get('/update/{id}', [PostController::class, 'update'])->name('update');
-    Route::get('/delete/{id}', [PostController::class, 'delete'])->name('delete');
-    Route::post('/delete-any', [PostController::class, 'handleDeleteAny'])->name('delete-any');
-    Route::get('/restore/{id}', [PostController::class, 'restore'])->name('restore');
-    Route::get('/force-delete/{id}', [PostController::class, 'forceDelete'])->name('force-delete');
-});
+// Route::prefix('posts')->name('posts.')->group(function () {
+//     Route::get('/', [PostController::class, 'index'])->name('index');
+//     Route::get('/add', [PostController::class, 'add'])->name('add');
+//     Route::get('/update/{id}', [PostController::class, 'update'])->name('update');
+//     Route::get('/delete/{id}', [PostController::class, 'delete'])->name('delete');
+//     Route::post('/delete-any', [PostController::class, 'handleDeleteAny'])->name('delete-any');
+//     Route::get('/restore/{id}', [PostController::class, 'restore'])->name('restore');
+//     Route::get('/force-delete/{id}', [PostController::class, 'forceDelete'])->name('force-delete');
+// });
 // Route::get('san-pham/{id}', [HomeController::class, 'getDetail']);
 
 // Route::middleware('auth.admin')->prefix('admin')->group(function () {
@@ -187,3 +189,12 @@ Route::prefix('posts')->name('posts.')->group(function () {
 // });
 
 // Route::get('download-image', [HomeController::class, 'downloadImage'])->name('download-image');
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', function () {
+    return '<h1>Home Page</h1>';
+});
