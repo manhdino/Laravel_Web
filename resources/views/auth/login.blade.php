@@ -15,15 +15,14 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">Email hoặc
+                                <label for="username" class="col-md-4 col-form-label text-md-end">Email hoặc
                                     Username</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" placeholder="Email hoặc Username..."
-                                        class="form-control @error('name') is-invalid @enderror" name="name"
-                                        value="{{ old('name') }}" autofocus>
-
-                                    @error('name')
+                                    <input id="username" type="text" placeholder="Email hoặc Username..."
+                                        class="form-control @error('username') is-invalid @enderror" name="username"
+                                        value="{{ old('username') }}" autofocus>
+                                    @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

@@ -62,19 +62,19 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'name';
+        return 'username';
     }
 
     protected function credentials(Request $request)
     {
-        if (filter_var($request->name, FILTER_VALIDATE_EMAIL)) {
+        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
             $fieldDB = 'email';
         } else {
-            $fieldDB = 'name';
+            $fieldDB = 'username';
         }
 
         $data = [
-            $fieldDB => $request->name,
+            $fieldDB => $request->username,
             'password' => $request->password
         ];
         return $data;
