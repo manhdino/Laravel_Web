@@ -15,14 +15,15 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">Địa chỉ email</label>
+                                <label for="email" class="col-md-4 col-form-label text-md-end">Email hoặc
+                                    Username</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="text" placeholder="Địa chỉ email..."
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" autocomplete="email" autofocus>
+                                    <input id="name" type="text" placeholder="Email hoặc Username..."
+                                        class="form-control @error('name') is-invalid @enderror" name="name"
+                                        value="{{ old('name') }}" autofocus>
 
-                                    @error('email')
+                                    @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
