@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-
 
 class RegisterController extends Controller
 {
@@ -32,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo;
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -42,7 +38,6 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->redirectTo = route('register');
     }
 
     /**
@@ -53,31 +48,11 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make(
-            $data,
-            [
-                'fullname' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'username' => ['required', 'unique:users'],
-                'password' => ['required', 'string', 'min:8'],
-                'password_confirmation' => ['required', 'same:password'],
-            ],
-            [
-                'required' => ':attribute bắt buộc phải nhập',
-                'string' => ':attribute phải là kí tự',
-                'max' => ':attribute không được lớn hơn :max kí tự',
-                'email' => ':attribute không đúng định dạng email',
-                'unique' => ':attribute đã được sử dụng',
-                'same' => ':attribute phải giống mật khẩu'
-            ],
-            [
-                'fullname' => 'Họ và tên',
-                'email' => 'Địa chỉ email',
-                'username' => 'Tên đăng nhập',
-                'password' => 'Mật khẩu',
-                'password_confirmation' => 'Nhập lại mật khẩu'
-            ]
-        );
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
 
     /**
@@ -89,29 +64,9 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'fullname' => $data['fullname'],
+            'name' => $data['name'],
             'email' => $data['email'],
-            'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
-    }
-
-
-
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        // $this->guard()->login($user);
-
-        if ($response = $this->registered($request, $user)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 201)
-            : redirect($this->redirectPath())->with('msg', 'Đăng kí tài khoản thành công.');
     }
 }
