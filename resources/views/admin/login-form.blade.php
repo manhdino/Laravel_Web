@@ -19,7 +19,7 @@
                                 {{ session('msg') }}
                             </div>
                         @endif
-                        <form method="POST" action="{{ route('doctors.login') }}">
+                        <form method="POST" action="{{ route('login.form') }}">
                             @csrf
                             <div class="row mb-3">
                                 <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>

@@ -25,7 +25,7 @@ class AdminController extends Controller
     {
         $credentials = $request->except(['_token']);
 
-        if (isDoctorActive($credentials['email'])) { //trường isActive = 1
+        if (isAdminActive($credentials['email'])) { //trường isActive = 1
             if (Auth::guard('admin')->attempt($credentials)) {
                 return redirect()->route('dashboard');
             } else {

@@ -2,10 +2,10 @@
 
 // Hàm kiểm tra xem tài khoản đã active hay chưa
 
-use App\Models\Doctors;
+use App\Models\Admin;
 
-function isDoctorActive($email)
+function isAdminActive($email)
 {
-    $count =  Doctors::where('email', $email)->where('isActive', 1)->count();
+    $count =  Admin::where('email', $email)->where('isActive', 1)->count();
     return ($count > 0) ? true : false;
 }

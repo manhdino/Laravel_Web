@@ -215,18 +215,3 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('msg', 'Link xác nhận đã được gửi lại tới email của bạn');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
-
-
-//Route Admin(Guard)
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::prefix('admin')->name('login.')->group(function () {
-    Route::get('login-form', [AdminController::class, 'login_form'])->name('form');
-    Route::post('login-post', [AdminController::class, 'login_post'])->name('post');
-});
-Route::group(['middleware' => 'admin'], function () {
-    Route::get('logout', [AdminController::class, 'logout'])->name('logout');
-    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-})->prefix('admin');
