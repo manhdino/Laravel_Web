@@ -26,11 +26,18 @@ class DatabaseSeeder extends Seeder
         //$this->call(UserSeeder::class);
         //$this->call(GroupSeeder::class);
 
-        DB::table('doctors')->insert([
-            'name' => 'Dinomanh',
-            'email' => 'manhnguyen@gmail.com',
+        // DB::table('doctors')->insert([
+        //     'name' => 'Dinomanh',
+        //     'email' => 'manhnguyen1238@gmail.com',
+        //     'password' => Hash::make('12345678'),
+        //     'created_at' => date('Y-m-d H:i:s')
+        // ]);
+
+        DB::table('admins')->insert([
+            'fullname' => 'Nguyen Viet Manh',
+            'username' => 'Dinomanh',
+            'email' => 'manhnguyen1238@gmail.com',
             'password' => Hash::make('12345678'),
-            'created_at' => date('Y-m-d H:i:s')
         ]);
     }
 }

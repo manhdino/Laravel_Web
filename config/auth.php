@@ -40,9 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'doctor' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'doctors',
+            'provider' => 'admins',
         ],
     ],
 
@@ -69,9 +69,9 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'doctors' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'table' => App\Models\Doctors::class,
+            'model' => App\Models\Admin::class,
         ],
     ],
 
@@ -101,8 +101,8 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'doctors' => [
-            'provider' => 'doctors',
+        'admins' => [
+            'provider' => 'admins',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

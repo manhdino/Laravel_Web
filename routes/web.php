@@ -1,16 +1,10 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\Admin\ProductsController;
-use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -196,10 +190,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
 
-Route::get('/', function () {
-    return '<h1>Home Page</h1>';
-});
-
 //Link thông báo verify khi đăng kí tài khoản xong nhưng ko xác thực email 
 Route::get('/email/verify', function () {
     return view('auth.verify');
@@ -225,3 +215,18 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('msg', 'Link xác nhận đã được gửi lại tới email của bạn');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
+
+//Route Admin(Guard)
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::prefix('admin')->name('login.')->group(function () {
+    Route::get('login-form', [AdminController::class, 'login_form'])->name('form');
+    Route::post('login-post', [AdminController::class, 'login_post'])->name('post');
+});
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('logout', [AdminController::class, 'logout'])->name('logout');
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+})->prefix('admin');

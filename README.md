@@ -38,3 +38,4 @@
     -   Login,Regiser,Confirm,Forgot,Reset,Vertification Controller
     -   Custom lại Validation cho từng Controller(do mặc định Validation là do HTML5)
     -   View tương ứng với từng Controller
+    -   Custom Guard(Tạo cho admin và users)

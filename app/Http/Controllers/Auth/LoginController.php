@@ -46,7 +46,8 @@ class LoginController extends Controller
             'password' => 'required|string|min:6',
         ], [
             $this->username() . '.required' => 'Tên đăng nhập bắt buộc phải nhập',
-            $this->username() . '.string' => 'Kiểu dữ liệu tên đăng nhập không hợp lệ',
+            $this->username() . '.string' => 'Kiểu dữ liệu 
+            tên đăng nhập không hợp lệ',
             'password.required' => 'Mật khẩu bắt buộc phải nhập',
             'password.string' => 'Kiểu dữ liệu mật khẩu không hợp lệ',
             'password.min' => 'Mật khẩu phải có ít nhất :min kí tự'
