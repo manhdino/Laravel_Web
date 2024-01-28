@@ -10,7 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 class AdminController extends Controller
+
 {
+
+    public function index()
+    {
+        return '<h1>Welcome Admin</h1>';
+    }
+
     //todo: admin login form
     public function login_form()
     {
