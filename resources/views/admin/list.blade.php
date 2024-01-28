@@ -12,7 +12,6 @@
 
 <body>
     <h1>Danh sách bài viết</h1>
-
     @can('post.add')
         <button href="" class="btn btn-primary">Thêm bài viết</button>
     @endcan

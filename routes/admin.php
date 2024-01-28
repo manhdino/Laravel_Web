@@ -22,6 +22,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/', [PostController::class, 'index'])->name('index');
             Route::get('/add', [PostController::class, 'add'])->name('add')->can('post.add');
             Route::get('/edit/{post}', [PostController::class, 'edit'])->name('edit')->middleware('can:post.edit,post');
+            Route::get('/detail/{post}', [PostController::class, 'detail'])->name('detail');
         });
     });
 });

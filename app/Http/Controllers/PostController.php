@@ -2,15 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
+
+
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request, Post $post)
     {
+
+        //C1:
+        // if ($request->user()->can('viewAny', $post)) {
+        //     return view('admin.list');
+        // }
+        // if ($request->user()->cannot('viewAny', $post)) {
+        //     abort(403);
+        // }
+
+        //C2:
+        $this->authorize('viewAny', $post);
         return view('admin.list');
     }
 
@@ -37,5 +52,20 @@ class PostController extends Controller
         // if (Gate::forUser($user)->denies('post.edit', $post)) {
         //     return 'User id: ' . $user->id . ' không có quyền edit bài viết với id: ' . $post->id;
         // }
+    }
+
+    public function detail(Request $request, Post $post)
+    {
+        //C1
+        // if ($request->user()->can('view', $post)) {
+        //     return 'Bạn (' . $request->user()->username . ') có quyền sửa bài viết với id:  ' . $post->id;
+        // }
+        // if ($request->user()->cannot('view', $post)) {
+        //     abort(403);
+        // }
+
+        //C2:
+        $this->authorize('view', $post);
+        return 'Bạn (' . $request->user()->username . ') có quyền sửa bài viết với id:  ' . $post->id;
     }
 }
