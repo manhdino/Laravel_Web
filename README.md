@@ -31,4 +31,7 @@
     - Xem danh sách nhóm
     - Thêm,sửa,xóa nhóm
     - Phân quyền nhóm
-  - Module người dùng - Xem người dùng - Thêm người dùng - Sửa,Xóa người dùng
+  - Module người dùng
+    - Xem người dùng
+     - Thêm người dùng
+    - Sửa,Xóa người dùng
