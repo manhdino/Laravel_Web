@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
             $table->string('name')->nullable();
             $table->text('permissions')->nullable(); //chứa chuỗi JSON phân quyền
             $table->timestamps();

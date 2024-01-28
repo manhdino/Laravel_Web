@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+
 
 class ConfirmPasswordController extends Controller
 {
@@ -25,7 +27,7 @@ class ConfirmPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::ADMIN;
 
     /**
      * Create a new controller instance.
