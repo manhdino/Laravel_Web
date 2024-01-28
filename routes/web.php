@@ -188,6 +188,10 @@ use App\Http\Controllers\AdminController;
 
 Auth::routes();
 
+Route::get('/', function () {
+    return '<h1>Welcome</h1>';
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
 
 //Link thông báo verify khi đăng kí tài khoản xong nhưng ko xác thực email 
