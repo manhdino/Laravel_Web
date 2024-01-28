@@ -19,18 +19,13 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Blade::directive('hello', function ($expression) {
-            return "<?php echo 'Hello '. {$expression} .','; ?>";
-});
+        Blade::if('env', function ($environment) {
+            if (config('app.env') == $environment) {
+                return true;
+            }
+            return false;
+        });
 
-Blade::if('env', function ($environment) {
-if (config('app.env') == $environment) {
-return true;
-}
-return false;
-});
-
-Blade::component('package-alert', Alert::class);
-Paginator::useBootstrapFive();
-}
+        Paginator::useBootstrapFive();
+    }
 }

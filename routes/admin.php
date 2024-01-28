@@ -14,12 +14,14 @@ Route::prefix('admin')->group(function () {
     Route::post('/login-form', [AdminController::class, 'login_post'])->name('login.post');
 
     Route::group(['middleware' => 'admin'], function () {
-        Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
+
+        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::prefix('posts')->middleware(['auth', 'verified'])->name('posts.')->group(function () {
+        Route::prefix('posts')->middleware(['auth', 'verified'])->name('posts.')->group(function () { //thêm middleware này để bắt người dùng phải đăng nhập thành công
+            //tức là cả admin và người dùng phải đã đăng nhập thành công
             Route::get('/', [PostController::class, 'index'])->name('index');
-            Route::get('/add', [PostController::class, 'add'])->name('add');
-            Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
+            Route::get('/add', [PostController::class, 'add'])->name('add')->can('post.add');
+            Route::get('/edit/{post}', [PostController::class, 'edit'])->name('edit')->middleware('can:post.edit,post');
         });
     });
 });

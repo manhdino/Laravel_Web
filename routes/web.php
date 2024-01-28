@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -213,6 +214,8 @@ Route::get('/profile', function () {
     return view('profile');
 })->middleware(['auth', 'verified'])->name('profile');
 
+//Logout chỉ truy cập được nếu đã đăng nhập thành công và verify ok
+Route::post('/logout', [HomeController::class, 'logout'])->middleware(['auth', 'verified'])->name('user.logout');
 
 //Link gửi lại link xác thực email khi người dùng ko nhận được email xác thực 
 Route::post('/email/verification-notification', function (Request $request) {

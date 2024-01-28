@@ -17,7 +17,15 @@
             <div class="col-md-6">
                 <h2 class="py-5">Admin Dashboard</h2>
                 <h4 class="py-2">Welcome !!</h4>
-                <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
+                <a class="btn btn-danger" href="{{ route('admin.logout') }}"
+                    onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </div>
         </div>
     </div>
