@@ -17,4 +17,10 @@ class Group extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function postBy($user_id)
+    {
+        $user_creator = User::find($user_id);
+        return $user_creator->name;
+    }
 }

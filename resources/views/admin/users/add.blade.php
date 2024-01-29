@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Danh sách người dùng')
+@section('title', 'Thêm người dùng')
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
