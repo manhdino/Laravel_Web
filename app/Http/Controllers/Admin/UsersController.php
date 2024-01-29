@@ -70,14 +70,48 @@ class UsersController extends Controller
         return redirect()->route('admin.users.index')->with('msg', 'Thêm người dùng thành công');
     }
 
-    public function edit()
+    public function edit(User $user)
     {
-        return view('admin.users.edit');
+        $groups = $this->group::all();
+        return view('admin.users.edit', compact('groups', 'user'));
     }
 
-    public function postEdit()
+    public function postEdit(User $user, Request $request)
     {
-        return 'Post Edit';
+
+        $request->validate(
+            [
+                'name' => 'required|min:6',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'group_id' => ['required', function ($attribute, $value, $fail) {
+                    if ($value == 0) {
+                        $fail('Vui lòng chọn nhóm');
+                    }
+                }]
+            ],
+            [
+                'required' => ':attribute không được để trống',
+                'email' => ':attribute không đúng định dạng email',
+                'unique' => ':attribute đã có người sử dụng',
+                'min' => ':attribute phải có tối thiểu :min kí tự'
+            ],
+            [
+                'name' => 'Tên',
+                'email' => 'Email',
+                'group_id' => 'Nhóm'
+            ]
+
+        );
+
+        //Update user information into database
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->group_id = $request->group_id;
+        $user->save();
+        return back()->with('msg', 'Cập nhật người dùng thành công');
     }
 
     public function delete()

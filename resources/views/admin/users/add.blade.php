@@ -52,6 +52,7 @@
                 @enderror
             </div>
             <button type="submit" class="btn btn-primary">Thêm mới</button>
+            <a href="{{ route('admin.users.index') }}" class="btn btn-success">Quay lại</a>
             @csrf
         </form>
     </div>
