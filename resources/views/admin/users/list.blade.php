@@ -11,6 +11,9 @@
     <div class="mx-5">
         <a href="{{ route('admin.users.add') }}" class="btn btn-primary">Thêm mới</a>
         <hr>
+        @if (session('msg'))
+            <div class="alert alert-success">{{ session('msg') }}</div>
+        @endif
         <table class="table table-bordered">
 
             <thead>
