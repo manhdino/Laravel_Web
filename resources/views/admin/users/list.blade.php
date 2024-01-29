@@ -12,7 +12,10 @@
         <a href="{{ route('admin.users.add') }}" class="btn btn-primary">Thêm mới</a>
         <hr>
         @if (session('msg'))
-            <div class="alert alert-success">{{ session('msg') }}</div>
+            <div class="alert alert-success w-25">{{ session('msg') }}</div>
+        @endif
+        @if (session('msg_error'))
+            <div class="alert alert-danger w-25">{{ session('msg_error') }}</div>
         @endif
         <table class="table table-bordered">
 
@@ -41,6 +44,10 @@
                                 <a href="{{ route('admin.users.edit', $item) }}" class="btn btn-warning">Sửa</a>
                             </td>
                             <td>
+                                {{-- @if (Auth::user()->id !== $item->id)
+                                    <a href="{{ route('admin.users.delete', $item) }}" class="btn btn-danger"
+                                        onclick="return confirm('Bạn chắc chắn có muốn xóa?')">Xóa</a>
+                                @endif --}}
                                 <a href="{{ route('admin.users.delete', $item) }}" class="btn btn-danger"
                                     onclick="return confirm('Bạn chắc chắn có muốn xóa?')">Xóa</a>
                             </td>

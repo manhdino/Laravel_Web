@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -114,8 +115,12 @@ class UsersController extends Controller
         return back()->with('msg', 'Cập nhật người dùng thành công');
     }
 
-    public function delete()
+    public function delete(User $user)
     {
-        return 'delete successfully';
+        if (Auth::user()->id != $user->id) { //Tài khoản đang đăng nhập không phải là tài khoản cần xóa
+            User::destroy($user->id);
+            return redirect()->route('admin.users.index')->with('msg', 'Xóa người dùng thành công');
+        }
+        return redirect()->route('admin.users.index')->with('msg_error', 'Bạn không thể xóa tài khoản đang đăng nhập');
     }
 }
