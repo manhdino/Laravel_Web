@@ -21,6 +21,9 @@ class Group extends Model
     public function postBy($user_id)
     {
         $user_creator = User::find($user_id);
-        return $user_creator->name;
+        if ($user_creator) {
+            return $user_creator->name;
+        }
+        return null;
     }
 }

@@ -15,7 +15,7 @@
             <div class="alert alert-success w-25">{{ session('msg') }}</div>
         @endif
         @if (session('msg_error'))
-            <div class="alert alert-danger w-25">{{ session('msg_error') }}</div>
+            <div class="alert alert-danger w-50">{{ session('msg_error') }}</div>
         @endif
         <table class="table table-bordered">
 
