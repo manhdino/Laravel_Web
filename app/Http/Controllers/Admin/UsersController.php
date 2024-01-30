@@ -21,7 +21,7 @@ class UsersController extends Controller
     }
     public function index()
     {
-        $lists = $this->user::all();
+        $lists = $this->user::orderBy('created_at', 'desc')->get();
         return view('admin.users.list', compact('lists'));
     }
 

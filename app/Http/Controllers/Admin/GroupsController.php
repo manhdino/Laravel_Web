@@ -21,7 +21,7 @@ class GroupsController extends Controller
 
     public function index()
     {
-        $lists = $this->group::all();
+        $lists = $this->group::orderBy('created_at', 'desc')->get();
         return view('admin.groups.list', compact('lists'));
     }
 

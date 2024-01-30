@@ -35,3 +35,4 @@
         -   Xem người dùng
         -   Thêm người dùng
         -   Sửa,Xóa người dùng
+-   Thiết lập Gate

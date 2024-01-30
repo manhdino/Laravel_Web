@@ -55,46 +55,54 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_posts"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa fa-book" aria-hidden="true"></i>
-                    <span>Bài viết</span>
-                </a>
-                <div id="collapse_posts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.posts.index') }}">Danh sách bài viết</a>
-                        <a class="collapse-item" href="{{ route('admin.posts.add') }}">Thêm bài viết</a>
+            @can('posts')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_posts"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <span>Bài viết</span>
+                    </a>
+                    <div id="collapse_posts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('admin.posts.index') }}">Danh sách bài viết</a>
+                            <a class="collapse-item" href="{{ route('admin.posts.add') }}">Thêm bài viết</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endcan
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_groups"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    <span>Nhóm người dùng</span>
-                </a>
-                <div id="collapse_groups" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.groups.index') }}">Danh sách nhóm người</a>
-                        <a class="collapse-item" href="{{ route('admin.groups.add') }}">Thêm nhóm người </a>
+
+            @can('groups')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_groups"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        <span>Nhóm người dùng</span>
+                    </a>
+                    <div id="collapse_groups" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('admin.groups.index') }}">Danh sách nhóm người</a>
+                            <a class="collapse-item" href="{{ route('admin.groups.add') }}">Thêm nhóm người </a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_users"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span>Người dùng</span>
-                </a>
-                <div id="collapse_users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách người dùng</a>
-                        <a class="collapse-item" href="{{ route('admin.users.add') }}">Thêm người dùng </a>
+                </li>
+            @endcan
+
+            @can('users')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_users"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>Người dùng</span>
+                    </a>
+                    <div id="collapse_users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách người dùng</a>
+                            <a class="collapse-item" href="{{ route('admin.users.add') }}">Thêm người dùng </a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endcan
 
             <!-- Divider -->
             <hr class="sidebar-divider">
