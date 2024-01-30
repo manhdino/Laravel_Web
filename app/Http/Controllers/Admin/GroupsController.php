@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -78,5 +79,43 @@ class GroupsController extends Controller
             return redirect()->route('admin.groups.index')->with('msg', 'Xóa nhóm người dùng thành công');
         }
         return redirect()->route('admin.groups.index')->with('msg_error', 'Nhóm ' . $group->name . ' vẫn còn ' . $userCount . ' người dùng nên không thể xóa');
+    }
+
+    public function permission(Group $group)
+    {
+        $modules = Module::all();
+
+        $roleList = [
+            'view' => 'Xem',
+            'add' => 'Thêm',
+            'edit' => 'Sửa',
+            'delete' => 'Xóa'
+        ];
+
+        $roleJson = $group->permissions;
+        if (!empty($roleJson)) {
+            $RolesArr = json_decode($roleJson, true);
+        } else {
+            $RolesArr = [];
+        }
+
+
+        return view('admin.groups.permission', compact('group', 'modules', 'roleList', 'RolesArr'));
+    }
+
+    public function postPermission(Group $group, Request $request)
+    {
+
+        if (!empty($request->role)) {
+            $roles = $request->role;
+        } else {
+            $roles = [];
+        }
+
+        $roleJson = json_encode($roles);
+
+        $group->permissions = $roleJson;
+        $group->save();
+        return back()->with('msg', 'Phân quyền thành công');
     }
 }

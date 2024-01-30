@@ -39,20 +39,29 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     //groups
     Route::prefix('groups')->name('groups.')->group(function () {
         Route::get('/', [GroupsController::class, 'index'])->name('index');
+
         Route::get('/add', [GroupsController::class, 'add'])->name('add');
         Route::post('/add', [GroupsController::class, 'postAdd']);
+
         Route::get('/edit/{group}', [GroupsController::class, 'edit'])->name('edit');
         Route::post('/edit/{group}', [GroupsController::class, 'postEdit']);
+
         Route::get('/delete/{group}', [GroupsController::class, 'delete'])->name('delete');
+
+        Route::get('/permission/{group}', [GroupsController::class, 'permission'])->name('permission');
+        Route::post('/permission/{group}', [GroupsController::class, 'postPermission']);
     });
 
     //users
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UsersController::class, 'index'])->name('index');
+
         Route::get('/add', [UsersController::class, 'add'])->name('add');
         Route::post('/add', [UsersController::class, 'postAdd']);
+
         Route::get('/edit/{user}', [UsersController::class, 'edit'])->name('edit');
         Route::post('/edit/{user}', [UsersController::class, 'postEdit']);
+
         Route::get('/delete/{user}', [UsersController::class, 'delete'])->name('delete');
     });
 });

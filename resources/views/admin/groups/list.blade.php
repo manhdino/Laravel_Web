@@ -38,7 +38,8 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->postBy($item->user_id) }}</td>
-                            <td><a href="#" class="btn btn-primary">Phân quyền</a></td>
+                            <td><a href="{{ route('admin.groups.permission', $item) }}" class="btn btn-primary">Phân
+                                    quyền</a></td>
                             <td>{{ $item->created_at }}</td>
                             <td>
                                 <a href="{{ route('admin.groups.edit', $item) }}" class="btn btn-warning">Sửa</a>
