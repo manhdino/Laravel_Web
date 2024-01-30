@@ -41,7 +41,9 @@
                             <td>{{ $item->group->name }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>
+
                                 <a href="{{ route('admin.users.edit', $item) }}" class="btn btn-warning">Sửa</a>
+
                             </td>
                             <td>
                                 {{-- @if (Auth::user()->id !== $item->id)

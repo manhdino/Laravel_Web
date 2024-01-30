@@ -34,6 +34,8 @@ class AuthServiceProvider extends ServiceProvider
 
         if ($modules->count() > 0) {
             foreach ($modules as $module) {
+
+                // view , add
                 Gate::define($module->name, function (User $user) use ($module) {
                     $roleJson = $user->group->permissions;
                     if (!empty($roleJson)) {
@@ -50,6 +52,17 @@ class AuthServiceProvider extends ServiceProvider
                     if (!empty($roleJson)) {
                         $RolesArr = json_decode($roleJson, true);
                         $check = isRole($RolesArr, $module->name, 'edit');
+                        return $check;
+                    } else {
+                        $RolesArr = [];
+                    }
+                });
+
+                Gate::define($module->name . '.delete', function (User $user) use ($module) {
+                    $roleJson = $user->group->permissions;
+                    if (!empty($roleJson)) {
+                        $RolesArr = json_decode($roleJson, true);
+                        $check = isRole($RolesArr, $module->name, 'delete');
                         return $check;
                     } else {
                         $RolesArr = [];

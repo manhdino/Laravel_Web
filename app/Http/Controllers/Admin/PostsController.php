@@ -84,6 +84,7 @@ class PostsController extends Controller
     public function delete(Post $post)
     {
 
+        $this->authorize('delete', $post); //Check policy ai là người đăng bài nào sẽ có quyền xóa bài đó phòng trường hợp truy cập trực tiếp qua url 
         if (Auth::user()->id == $post->user_id) {
             Post::destroy($post->id);
             return redirect()->route('admin.posts.index')->with('msg', 'Xóa bài viết thành công');

@@ -29,8 +29,13 @@
                     <th>Nội dung</th>
                     <th width="15%">Tác giả</th>
                     <th width="13%">Thời gian</th>
-                    <th width="5%">Sửa</th>
-                    <th width="5%">Xóa</th>
+                    @can('posts.edit')
+                        <th width="5%">Sửa</th>
+                    @endcan
+                    @can('posts.delete')
+                        <th width="5%">Xoá</th>
+                    @endcan
+
                 </tr>
             </thead>
             <tbody>
@@ -43,13 +48,18 @@
                             <td>{{ $item->content }}</td>
                             <td>{{ $item->user->name }}</td>
                             <td>{{ $item->created_at }}</td>
-                            <td>
-                                <a href="{{ route('admin.posts.edit', $item) }}" class="btn btn-warning">Sửa</a>
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.posts.delete', $item) }}" class="btn btn-danger"
-                                    onclick="return confirm('Bạn chắc chắn có muốn xóa?')">Xóa</a>
-                            </td>
+                            @can('posts.edit')
+                                <td>
+                                    <a href="{{ route('admin.posts.edit', $item) }}" class="btn btn-warning">Sửa</a>
+                                </td>
+                            @endcan
+
+                            @can('posts.delete')
+                                <td>
+                                    <a href="{{ route('admin.posts.delete', $item) }}" class="btn btn-danger"
+                                        onclick="return confirm('Bạn chắc chắn có muốn xóa?')">Xóa</a>
+                                </td>
+                            @endcan
                         </tr>
                     @endforeach
 

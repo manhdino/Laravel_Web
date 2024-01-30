@@ -43,7 +43,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/edit/{post}', [PostsController::class, 'edit'])->name('edit')->can('posts.edit');
         Route::post('/edit/{post}', [PostsController::class, 'postEdit']);
 
-        Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete');
+        Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete')->can('posts.delete');
     });
 
     //groups
