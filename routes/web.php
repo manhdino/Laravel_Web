@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use PhpParser\Node\Expr\PostDec;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,12 +35,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     //posts
     Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function () {
-        Route::get('/', [PostsController::class, 'index'])->name('index');
+        Route::get('/', [PostsController::class, 'index'])->name('index')->can('viewAny', Post::class);
 
-        Route::get('/add', [PostsController::class, 'add'])->name('add');
-        Route::post('/add', [PostsController::class, 'postAdd']);
+        Route::get('/add', [PostsController::class, 'add'])->name('add')->can('create', Post::class);
+        Route::post('/add', [PostsController::class, 'postAdd'])->can('create', Post::class);
 
-        Route::get('/edit/{post}', [PostsController::class, 'edit'])->name('edit');
+        Route::get('/edit/{post}', [PostsController::class, 'edit'])->name('edit')->can('posts.edit');
         Route::post('/edit/{post}', [PostsController::class, 'postEdit']);
 
         Route::get('/delete/{post}', [PostsController::class, 'delete'])->name('delete');

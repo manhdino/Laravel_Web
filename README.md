@@ -35,4 +35,6 @@
         -   Xem người dùng
         -   Thêm người dùng
         -   Sửa,Xóa người dùng
--   Thiết lập Gate
+-   Gate(Controller): Cho phép tạo,thêm,sửa,xóa hay không
+-   Policy(Model): Sau khi Gate cho phép sửa nhưng chỉ được sửa,xóa bài viết chính người dùng đang
+    đăng nhập tạo ra

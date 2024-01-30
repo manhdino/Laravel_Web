@@ -18,6 +18,7 @@ class PostsController extends Controller
     }
     public function index()
     {
+        // $this->authorize('viewAny', Post::class);
         $lists = Post::orderBy('created_at', 'desc')->get();
         return view('admin.posts.list', compact('lists'));
     }
@@ -52,14 +53,16 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
-        if (Auth::user()->id == $post->user_id) {
-            return view('admin.posts.edit', compact('post'));
-        }
-        return redirect()->route('admin.posts.index')->with('msg_error', 'Bạn không thể sửa bài viết của người khác');
+        $this->authorize('update', $post);
+        //   if (Auth::user()->id == $post->user_id) {
+        return view('admin.posts.edit', compact('post'));
+        //   }
+        //  return redirect()->route('admin.posts.index')->with('msg_error', 'Bạn không thể sửa bài viết của người khác');
     }
 
     public function postEdit(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
         $request->validate(
             [
                 'title' => 'required',

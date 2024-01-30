@@ -9,8 +9,11 @@
 
 
     <div class="mx-5">
-        <a href="{{ route('admin.posts.add') }}" class="btn btn-primary">Thêm mới</a>
-        <hr>
+        @can('create', App\Models\Post::class)
+            <a href="{{ route('admin.posts.add') }}" class="btn btn-primary">Thêm mới</a>
+            <hr>
+        @endcan
+
         @if (session('msg'))
             <div class="alert alert-success w-25">{{ session('msg') }}</div>
         @endif
