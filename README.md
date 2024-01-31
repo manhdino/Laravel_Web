@@ -11,40 +11,42 @@
 
 ### Laravel Basic(nhánh learn-laravel)
 
--   Route,Controller,Middleware,View Basic
-    -   Cách tạo Route,Controller,Middleware bằng PHP artisan
-    -   Request Lifecycle MVC
--   HTTP Request
-    -   Phương thức,thuộc tính của HTTP Requet
-    -   Helper của Request
--   HTTP Response
-    -   Trạng thái của Response
-    -   Gán View,Cookie vào Response
-    -   Response dạng chuyển hướng(trả về auto chuyển hướng)
-    -   Flash Session
--   Blade(Form)
--   Cache
--   Component
--   Validation
-    -   Sử dụng method validate() từ lớp Request
-    -   Sử dụng Form Request
-    -   Sử dụng lớp Validator()
--   Database
-    -   Truy vấn SQL thuần
-    -   Truy vấn sử dụng Query Builder
-    -   Truy vấn sử dụng ORM(Relation trong ORM)
--   Migration and Seeding
--   Faker and Factory
--   Authentication:
-    -   Lifecycle Request trong Auth
-    -   Login,Regiser,Confirm,Forgot,Reset,Vertification Controller
-    -   Custom lại Validation cho từng Controller(do mặc định Validation là do HTML5)
-    -   View tương ứng với từng Controller
-    -   Custom Guard(Tạo cho admin và users)
--   Authorization:
-    -   Gate
-    -   Policy
+- Route,Controller,Middleware,View Basic
+  - Cách tạo Route,Controller,Middleware bằng PHP artisan
+  - Request Lifecycle MVC
+- HTTP Request
+  - Phương thức,thuộc tính của HTTP Requet
+  - Helper của Request
+- HTTP Response
+  - Trạng thái của Response
+  - Gán View,Cookie vào Response
+  - Response dạng chuyển hướng(trả về auto chuyển hướng)
+  - Flash Session
+- Blade(Form)
+- Cache
+- Component
+- Validation
+  - Sử dụng method validate() từ lớp Request
+  - Sử dụng Form Request
+  - Sử dụng lớp Validator()
+- Database
+  - Truy vấn SQL thuần
+  - Truy vấn sử dụng Query Builder
+  - Truy vấn sử dụng ORM(Relation trong ORM)
+- Migration and Seeding
+- Faker and Factory
+- Authentication:
+  - Lifecycle Request trong Auth
+  - Login,Regiser,Confirm,Forgot,Reset,Vertification Controller
+  - Custom lại Validation cho từng Controller(do mặc định Validation là do HTML5)
+  - View tương ứng với từng Controller
+  - Custom Guard(Tạo cho admin và users)
+- Authorization:
+  - Gate
+  - Policy
 
 ### Project
 
 #### Authorization(nhánh authorization)
+
+#### CRUD RESTfull API(nhánh api-crud)
