@@ -8,8 +8,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
+
 class UsersController extends Controller
 {
+
 
     private $users;
 
@@ -146,9 +149,23 @@ class UsersController extends Controller
         return $response;
     }
 
-    public function delete(User $user)
+    public function delete($id)
     {
-        return 'Delete User ' . $user;
+        $user = User::find($id);
+        if (!$user) {
+            $status = 'not found';
+        } else {
+            $status = $user->delete();
+            if ($status) {
+                $status = 'success';
+            } else {
+                $status = 'error';
+            }
+        }
+        $response = [
+            'status' => $status,
+        ];
+        return $response;
     }
 
     public function validation(Request $request, $id = 0)
