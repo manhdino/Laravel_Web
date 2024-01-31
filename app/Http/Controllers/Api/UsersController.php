@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +35,8 @@ class UsersController extends Controller
             $where[] = ['email', 'like', '%' . $request->email . '%'];
         }
 
+
+
         $users = User::orderBy('id', 'desc');
 
         if (!empty($where)) {
@@ -41,7 +44,7 @@ class UsersController extends Controller
         }
 
         $users = $users->get();
-        $users = UserResource::collection($users);
+
 
         if ($users->count() > 0) {
             $status = 'success';
@@ -53,7 +56,12 @@ class UsersController extends Controller
             'data' => $users,
         ];
 
-        return $response;
+        //return $response;
+
+        // $users = UserResource::collection($users)
+
+        $users = new UserCollection($users, $status);
+        return $users;
     }
 
     public function detail($id)
