@@ -46,7 +46,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $item->title }}</td>
                             <td>{{ $item->content }}</td>
-                            <td>{{ $item->user->name }}</td>
+                            <td>{{ $item->user->name ?? 'Không tìm thấy' }}</td>
                             <td>{{ $item->created_at }}</td>
                             @can('posts.edit')
                                 <td>

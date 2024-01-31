@@ -20,22 +20,10 @@ class PostPolicy
     // }
     public function viewAny(User $user): bool
     {
-        $roleJson = $user->group->permissions;
-        if (!empty($roleJson)) {
-            $RolesArr = json_decode($roleJson, true);
-            $check = isRole($RolesArr, 'posts');
-            return $check;
-        }
         return false;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Post $post): bool
-    {
-        //
-    }
+
 
     /**
      * Determine whether the user can create models.
@@ -66,21 +54,5 @@ class PostPolicy
     public function delete(User $user, Post $post): bool
     {
         return $user->id == $post->user_id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Post $post): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Post $post): bool
-    {
-        //
     }
 }

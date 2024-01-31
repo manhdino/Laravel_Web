@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\User;
 use PhpParser\Node\Expr\PostDec;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     //posts
     Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function () {
-        Route::get('/', [PostsController::class, 'index'])->name('index')->can('viewAny', Post::class);
+        Route::get('/', [PostsController::class, 'index'])->name('index'); // đã check Gate ở trên
 
         Route::get('/add', [PostsController::class, 'add'])->name('add')->can('create', Post::class);
         Route::post('/add', [PostsController::class, 'postAdd'])->can('create', Post::class);
@@ -66,12 +67,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::prefix('users')->name('users.')->middleware('can:users')->group(function () {
         Route::get('/', [UsersController::class, 'index'])->name('index');
 
-        Route::get('/add', [UsersController::class, 'add'])->name('add');
-        Route::post('/add', [UsersController::class, 'postAdd']);
+        Route::get('/add', [UsersController::class, 'add'])->name('add')->can('create', User::class);
+        Route::post('/add', [UsersController::class, 'postAdd'])->can('create', User::class);
 
-        Route::get('/edit/{user}', [UsersController::class, 'edit'])->name('edit');
+        Route::get('/edit/{user}', [UsersController::class, 'edit'])->name('edit')->can('posts.edit');
         Route::post('/edit/{user}', [UsersController::class, 'postEdit']);
 
-        Route::get('/delete/{user}', [UsersController::class, 'delete'])->name('delete');
+        Route::get('/delete/{user}', [UsersController::class, 'delete'])->name('delete')->can('posts.delete');
     });
 });

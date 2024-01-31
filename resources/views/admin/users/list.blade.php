@@ -9,8 +9,12 @@
 
 
     <div class="mx-5">
-        <a href="{{ route('admin.users.add') }}" class="btn btn-primary">Thêm mới</a>
-        <hr>
+
+
+        @can('create', App\Models\User::class)
+            <a href="{{ route('admin.users.add') }}" class="btn btn-primary">Thêm mới</a>
+            <hr>
+        @endcan
         @if (session('msg'))
             <div class="alert alert-success w-25">{{ session('msg') }}</div>
         @endif
@@ -25,35 +29,44 @@
                     <th>Tên</th>
                     <th>Email</th>
                     <th>Nhóm</th>
+                    <th>Người tạo</th>
                     <th width="13%">Thời gian</th>
-                    <th width="5%">Sửa</th>
-                    <th width="5%">Xóa</th>
+                    @can('users.edit')
+                        <th width="5%">Sửa</th>
+                    @endcan
+                    @can('users.delete')
+                        <th width="5%">Xóa</th>
+                    @endcan
+
                 </tr>
             </thead>
             <tbody>
 
                 @if ($lists->count() > 0)
                     @foreach ($lists as $key => $item)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->group->name }}</td>
-                            <td>{{ $item->created_at }}</td>
-                            <td>
+                        @if ($item->user_id > 0)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->email }}</td>
+                                <td>{{ $item->group->name }}</td>
+                                <th>{{ $item->creator($item->user_id)->name }}</th>
+                                <td>{{ $item->created_at }}</td>
+                                @can('users.edit')
+                                    <td>
+                                        <a href="{{ route('admin.users.edit', $item) }}" class="btn btn-warning">Sửa</a>
+                                    </td>
+                                @endcan
+                                @can('users.delete')
+                                    <td>
 
-                                <a href="{{ route('admin.users.edit', $item) }}" class="btn btn-warning">Sửa</a>
+                                        <a href="{{ route('admin.users.delete', $item) }}" class="btn btn-danger"
+                                            onclick="return confirm('Bạn chắc chắn có muốn xóa?')">Xóa</a>
+                                    </td>
+                                @endcan
 
-                            </td>
-                            <td>
-                                {{-- @if (Auth::user()->id !== $item->id)
-                                    <a href="{{ route('admin.users.delete', $item) }}" class="btn btn-danger"
-                                        onclick="return confirm('Bạn chắc chắn có muốn xóa?')">Xóa</a>
-                                @endif --}}
-                                <a href="{{ route('admin.users.delete', $item) }}" class="btn btn-danger"
-                                    onclick="return confirm('Bạn chắc chắn có muốn xóa?')">Xóa</a>
-                            </td>
-                        </tr>
+                            </tr>
+                        @endif
                     @endforeach
 
                 @endif

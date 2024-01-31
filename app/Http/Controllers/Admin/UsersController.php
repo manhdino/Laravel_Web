@@ -9,11 +9,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class UsersController extends Controller
 {
 
     private $user = null;
     private $group = null;
+
+
     public function __construct()
     {
         $this->user = new User();
@@ -27,6 +30,7 @@ class UsersController extends Controller
 
     public function add()
     {
+
         $groups = $this->group::all();
         return view('admin.users.add', compact('groups'));
     }
@@ -67,18 +71,21 @@ class UsersController extends Controller
         $this->user->email = $request->email;
         $this->user->password = Hash::make($request->password);
         $this->user->group_id = $request->group_id;
+        $this->user->user_id = Auth::user()->id;
         $this->user->save();
         return redirect()->route('admin.users.index')->with('msg', 'Thêm người dùng thành công');
     }
 
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         $groups = $this->group::all();
         return view('admin.users.edit', compact('groups', 'user'));
     }
 
     public function postEdit(User $user, Request $request)
     {
+        $this->authorize('update', $user);
 
         $request->validate(
             [
@@ -117,8 +124,9 @@ class UsersController extends Controller
 
     public function delete(User $user)
     {
+        $this->authorize('delete', $user);
         if (Auth::user()->id != $user->id) { //Tài khoản đang đăng nhập không phải là tài khoản cần xóa
-            User::destroy($user->id);
+            $user->delete();
             return redirect()->route('admin.users.index')->with('msg', 'Xóa người dùng thành công');
         }
         return redirect()->route('admin.users.index')->with('msg_error', 'Bạn không thể xóa tài khoản đang đăng nhập');

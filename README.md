@@ -38,3 +38,5 @@
 -   Gate(Controller): Cho phép tạo,thêm,sửa,xóa hay không
 -   Policy(Model): Sau khi Gate cho phép sửa nhưng chỉ được sửa,xóa bài viết chính người dùng đang
     đăng nhập tạo ra
+-   Không thể xóa hay cập nhật người tạo ra nhóm(VD 1 nhóm(Admin) có 5 User và các User này nếu được
+    phân quyền sửa thì sẽ được sửa bất kì người nào khác trong nhóm trừ Admin người tạo ra nhóm)

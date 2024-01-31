@@ -23,7 +23,7 @@
                 <tr>
                     <th width="5%">STT</th>
                     <th>Tên</th>
-                    <th>Người đăng</th>
+                    <th>Người tạo</th>
                     <th width="17%">Phân quyền</th>
                     <th width="17%">Thời gian</th>
                     <th width="5%">Sửa</th>

@@ -65,7 +65,10 @@
                     <div id="collapse_posts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{ route('admin.posts.index') }}">Danh sách bài viết</a>
-                            <a class="collapse-item" href="{{ route('admin.posts.add') }}">Thêm bài viết</a>
+                            @can('create', App\Models\Post::class)
+                                <a class="collapse-item" href="{{ route('admin.posts.add') }}">Thêm bài viết</a>
+                            @endcan
+
                         </div>
                     </div>
                 </li>
@@ -82,7 +85,9 @@
                     <div id="collapse_groups" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{ route('admin.groups.index') }}">Danh sách nhóm người</a>
-                            <a class="collapse-item" href="{{ route('admin.groups.add') }}">Thêm nhóm người </a>
+                            @can('create', App\Models\User::class)
+                                <a class="collapse-item" href="{{ route('admin.groups.add') }}">Thêm nhóm người </a>
+                            @endcan
                         </div>
                     </div>
                 </li>
@@ -98,7 +103,9 @@
                     <div id="collapse_users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách người dùng</a>
-                            <a class="collapse-item" href="{{ route('admin.users.add') }}">Thêm người dùng </a>
+                            @can('create', App\Models\User::class)
+                                <a class="collapse-item" href="{{ route('admin.users.add') }}">Thêm người dùng </a>
+                            @endcan
                         </div>
                     </div>
                 </li>
