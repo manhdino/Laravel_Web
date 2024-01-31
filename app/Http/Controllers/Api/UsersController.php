@@ -47,20 +47,22 @@ class UsersController extends Controller
 
 
         if ($users->count() > 0) {
-            $status = 'success';
+            $statusCode = 200;
+            $statusText = 'success';
         } else {
-            $status = 'no data';
+            $statusCode = 204;
+            $statusText = 'no data';
         }
-        $response = [
-            'status' => $status,
-            'data' => $users,
-        ];
+        // $response = [
+        //     'status' => $status,
+        //     'data' => $users,
+        // ];
 
         //return $response;
 
         // $users = UserResource::collection($users)
 
-        $users = new UserCollection($users, $status);
+        $users = new UserCollection($users, $statusText, $statusCode);
         return $users;
     }
 
@@ -69,18 +71,19 @@ class UsersController extends Controller
 
         $user = User::with('posts')->find($id);
         if ($user) {
+            $statusCode = 200;
             $user = new UserResource($user);
-            $response = [
-                'status ' => 'success',
-                'data' => $user,
-
-            ];
+            $statusText = 'success';
         } else {
-            $response = [
-                'status ' => 'not found',
-            ];
+            $statusCode = 404;
+            $statusText = 'not found';
         }
 
+        $response = [
+            'data' => $user,
+            'statusCode' => $statusCode,
+            'statusText' => $statusText
+        ];
         return $response;
     }
 
@@ -97,15 +100,16 @@ class UsersController extends Controller
 
         if ($this->users->id) {
             $response = [
-                'status ' => 'success',
+                'statusText' => 'created',
+                'statusCode ' => 201,
                 'data' => $this->users,
             ];
         } else {
             $response = [
-                'status ' => 'error',
+                'statusCode' => 500,
+                'statusText' => 'server error',
             ];
         }
-
 
         return $response;
     }
@@ -121,7 +125,8 @@ class UsersController extends Controller
 
         if (!$user) {
             $response = [
-                'status' => 'not found',
+                'statusText' => 'not found',
+                'statusCode' => 204,
             ];
         } else {
 
@@ -150,7 +155,8 @@ class UsersController extends Controller
             }
             $user->save();
             $response = [
-                'status' => 'success',
+                'statusCode' => 200,
+                'statusText' => 'success',
                 'data' => $user
             ];
         }

@@ -10,10 +10,12 @@ class UserCollection extends ResourceCollection
 {
     private $statusText;
 
-    public function __construct($resource, $statusText = 'success')
+    private $statusCode;
+    public function __construct($resource, $statusText = 'success', $statusCode = 200)
     {
         parent::__construct($resource);
         $this->statusText = $statusText;
+        $this->statusCode = $statusCode;
     }
 
 
@@ -21,9 +23,9 @@ class UserCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
-            'status' => $this->statusText,
+            'statusCode' => $this->statusCode,
+            'statusText' => $this->statusText,
             'count' => $this->collection->count(),
-
         ];
     }
 }
