@@ -16,14 +16,58 @@ class UsersController extends Controller
     {
         $this->users = new User();
     }
-    public function index()
+    public function index(Request $request)
     {
-        return 'ListUsers';
+
+        //Filter
+        $where = [];
+
+        if ($request->name) {
+            $where[] = ['name', 'like', '%' . $request->name . '%'];
+        }
+        if ($request->email) {
+            $where[] = ['email', 'like', '%' . $request->email . '%'];
+        }
+
+        $users = User::orderBy('id', 'desc');
+
+        if (!empty($where)) {
+            $users = $users->where($where);
+        }
+
+        $users = $users->get();
+
+
+        if ($users->count() > 0) {
+            $status = 'success';
+        } else {
+            $status = 'no data';
+        }
+        $response = [
+            'status' => $status,
+            'data' => $users,
+        ];
+
+        return $response;
     }
 
-    public function detail(User $user)
+    public function detail($id)
     {
-        return 'User Detail ' . $user;
+
+        $user = User::find($id);
+        if ($user) {
+            $response = [
+                'status ' => 'success',
+                'data' => $user,
+
+            ];
+        } else {
+            $response = [
+                'status ' => 'not found',
+            ];
+        }
+
+        return $response;
     }
 
     public function create(Request $request)
@@ -54,11 +98,20 @@ class UsersController extends Controller
         $this->users->password = Hash::make($request->password);
         $this->users->save();
 
-        $response = [
-            'status ' => 'success',
-            'data' => $this->users,
 
-        ];
+        if ($this->users->id) {
+            $response = [
+                'status ' => 'success',
+                'data' => $this->users,
+
+            ];
+        } else {
+            $response = [
+                'status ' => 'error',
+
+            ];
+        }
+
 
         return $response;
     }

@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', [UsersController::class, 'index'])->name('index');
 
-    Route::get('/{user}', [UsersController::class, 'detail'])->name('detail');
+    Route::get('/{id}', [UsersController::class, 'detail'])->name('detail');
 
     Route::post('/', [UsersController::class, 'create'])->name('create');
 
