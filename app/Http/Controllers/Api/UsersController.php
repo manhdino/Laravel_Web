@@ -43,7 +43,7 @@ class UsersController extends Controller
             $users = $users->where($where);
         }
 
-        $users = $users->get();
+        $users = $users->with('posts')->get();
 
 
         if ($users->count() > 0) {
@@ -67,7 +67,7 @@ class UsersController extends Controller
     public function detail($id)
     {
 
-        $user = User::find($id);
+        $user = User::with('posts')->find($id);
         if ($user) {
             $user = new UserResource($user);
             $response = [
