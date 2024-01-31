@@ -8,3 +8,17 @@
 </p>
 
 ## CRUD Restful API
+
+-   Khi xây dựng API với Laravel làm việc với file routes/api.php
+
+    -   URL sẽ có tiền tố api trước
+    -   Bỏ qua CSRF token (Submit form(POST) sẽ ko cần @csrf)
+    -   Middleware mặc định là api(cấu hình trong file Kernel.php)
+
+-   CRUD API
+    -   GET: /users => Lấy tất cả tài nguyên
+    -   GET: /users/id => Lấy tài nguyên theo Id
+    -   POST: /users => Thêm mới tài nguyên
+    -   PUT: /users/id => Cập nhật tất cả các trường của một tài nguyên
+    -   PATCH: /users/id => Cập nhật một vài trường của tài nguyên
+    -   DELETE: /users/id => Xóa 1 tài nguyên
