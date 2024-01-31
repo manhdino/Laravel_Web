@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -73,25 +74,7 @@ class UsersController extends Controller
     public function create(Request $request)
     {
 
-        $rules = [
-            'name' => 'required|min:6',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
-        ];
-        $messages = [
-            'required' => ':attribute không được để trống',
-            'email' => ':attribute không đúng định dạng email',
-            'unique' => ':attribute đã có người sử dụng',
-            'min' => ':attribute phải có tối thiểu :min kí tự'
-        ];
-
-        $attributes = [
-            'name' => 'Tên',
-            'email' => 'Email',
-            'password' => 'Mật khẩu',
-        ];
-
-        $request->validate($rules, $messages, $attributes);
+        $this->validation($request);
 
         $this->users->name = $request->name;
         $this->users->email = $request->email;
@@ -116,14 +99,84 @@ class UsersController extends Controller
         return $response;
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        echo $request->method();
-        return $request->all();
+
+        $method = $request->method();
+
+        $response = [];
+
+        $user = User::find($id);
+
+        if (!$user) {
+            $response = [
+                'status' => 'not found',
+            ];
+        } else {
+
+            $this->validation($request, $id);
+
+            if ($method == 'PUT') {
+                $user->name = $request->name;
+                $user->email = $request->email;
+                if ($request->password) {
+                    $user->password = Hash::make($request->password);
+                } else {
+                    $user->password = null;
+                }
+            } else { //PATCH
+                if ($request->name) {
+                    $user->name = $request->name;
+                }
+
+                if ($request->email) {
+                    $user->email = $request->email;
+                }
+
+                if ($request->password) {
+                    $user->password = $request->password;
+                }
+            }
+            $user->save();
+            $response = [
+                'status' => 'success',
+                'data' => $user
+            ];
+        }
+        return $response;
     }
 
     public function delete(User $user)
     {
         return 'Delete User ' . $user;
+    }
+
+    public function validation(Request $request, $id = 0)
+    {
+
+        $emailValidation = 'required|email|unique:users,email';
+
+        if (!empty($id)) {
+            $emailValidation = $emailValidation . ',' . $id;
+        }
+        $rules = [
+            'name' => 'required|min:6',
+            'email' => $emailValidation,
+            'password' => 'required|min:8',
+        ];
+        $messages = [
+            'required' => ':attribute không được để trống',
+            'email' => ':attribute không đúng định dạng email',
+            'unique' => ':attribute đã có người sử dụng',
+            'min' => ':attribute phải có tối thiểu :min kí tự'
+        ];
+
+        $attributes = [
+            'name' => 'Tên',
+            'email' => 'Email',
+            'password' => 'Mật khẩu',
+        ];
+
+        return $request->validate($rules, $messages, $attributes);
     }
 }

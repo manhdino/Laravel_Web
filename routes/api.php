@@ -27,9 +27,9 @@ Route::prefix('users')->name('users.')->group(function () {
 
     Route::post('/', [UsersController::class, 'create'])->name('create');
 
-    Route::put('/{user}', [UsersController::class, 'update'])->name('update-put');
+    Route::put('/{id}', [UsersController::class, 'update'])->name('update-put');
 
-    Route::patch('/{user}', [UsersController::class, 'update'])->name('update-patch');
+    Route::patch('/{id}', [UsersController::class, 'update'])->name('update-patch');
 
     Route::delete('/{user}', [UsersController::class, 'delete'])->name('delete');
 });
