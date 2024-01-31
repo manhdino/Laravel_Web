@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -40,7 +41,7 @@ class UsersController extends Controller
         }
 
         $users = $users->get();
-
+        $users = UserResource::collection($users);
 
         if ($users->count() > 0) {
             $status = 'success';
@@ -60,6 +61,7 @@ class UsersController extends Controller
 
         $user = User::find($id);
         if ($user) {
+            $user = new UserResource($user);
             $response = [
                 'status ' => 'success',
                 'data' => $user,
@@ -89,12 +91,10 @@ class UsersController extends Controller
             $response = [
                 'status ' => 'success',
                 'data' => $this->users,
-
             ];
         } else {
             $response = [
                 'status ' => 'error',
-
             ];
         }
 
