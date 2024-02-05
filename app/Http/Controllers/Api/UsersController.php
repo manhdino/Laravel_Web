@@ -43,9 +43,9 @@ class UsersController extends Controller
             $users = $users->where($where);
         }
 
-        $users = $users->with('posts')->get();
+        // $users = $users->with('posts')->get();
 
-
+        $users = $users->get();
         if ($users->count() > 0) {
             $statusCode = 200;
             $statusText = 'success';
@@ -69,7 +69,8 @@ class UsersController extends Controller
     public function detail($id)
     {
 
-        $user = User::with('posts')->find($id);
+        //$user = User::with('posts')->find($id);
+        $user = User::find($id);
         if ($user) {
             $statusCode = 200;
             $user = new UserResource($user);
